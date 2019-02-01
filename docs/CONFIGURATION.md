@@ -105,7 +105,7 @@ By default, all application logging is to stdout, including test information.  T
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.classic.PatternLayout">
-      <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %encode{%msg}%n</Pattern>
+      ...
     </layout>
   </appender>
 
