@@ -1,0 +1,30 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+bdd-for-all,org.accenture.testing.bdd.http,RequestState,21,174,3,9,8,50,5,23,2,20
+bdd-for-all,org.accenture.testing.bdd.http,ResponseState,7,242,4,10,0,38,4,12,0,9
+bdd-for-all,org.accenture.testing.bdd.api.http,APIResponseState,9,43,1,1,4,13,1,6,0,6
+bdd-for-all,org.accenture.testing.bdd.api.http,APIResponseStateType.new APIResponseStateType() {...},0,12,0,0,0,2,0,2,0,2
+bdd-for-all,org.accenture.testing.bdd.api.http,APIResponseStateType.new APIResponseStateType() {...},0,12,0,0,0,2,0,2,0,2
+bdd-for-all,org.accenture.testing.bdd.api.http,APIRequestState,0,89,0,4,0,25,0,10,0,8
+bdd-for-all,org.accenture.testing.bdd.api.http,APIResponseStateType.new APIResponseStateType() {...},0,12,0,0,0,2,0,2,0,2
+bdd-for-all,org.accenture.testing.bdd.api.http,APIResponseStateType,0,34,0,0,0,4,0,1,0,1
+bdd-for-all,org.accenture.testing.bdd.parameters,ResponseCacheTransform,0,39,0,2,0,9,0,4,0,3
+bdd-for-all,org.accenture.testing.bdd.parameters,ParamTransform,3,3,0,0,1,1,1,1,1,1
+bdd-for-all,org.accenture.testing.bdd.parameters,CacheTransform,0,9,0,0,0,3,0,3,0,3
+bdd-for-all,org.accenture.testing.bdd.parameters,FakerTransform,3,78,1,3,0,13,1,5,0,4
+bdd-for-all,org.accenture.testing.bdd.parameters,ParamTransformer,22,134,2,6,4,38,2,14,0,12
+bdd-for-all,org.accenture.testing.bdd.parameters,DefaultParamTransformer,0,31,0,0,0,7,0,1,0,1
+bdd-for-all,org.accenture.testing.bdd.api.steps,ParameterSteps,0,54,0,0,0,16,0,4,0,4
+bdd-for-all,org.accenture.testing.bdd.api.steps,ResponseSteps,34,367,10,16,8,89,10,20,0,15
+bdd-for-all,org.accenture.testing.bdd.api.steps,BasicSteps,1,160,1,1,0,42,1,10,0,10
+bdd-for-all,org.accenture.testing.bdd.api.steps,HeaderSteps,0,168,0,0,0,38,0,7,0,7
+bdd-for-all,org.accenture.testing.bdd.util,BDDConfig,5,55,0,0,2,17,2,6,2,6
+bdd-for-all,org.accenture.testing.bdd.comparison,Operator.new Operator() {...},0,15,0,2,0,3,0,4,0,3
+bdd-for-all,org.accenture.testing.bdd.comparison,Operator.new Operator() {...},0,15,0,2,0,3,0,4,0,3
+bdd-for-all,org.accenture.testing.bdd.comparison,Operator.new Operator() {...},0,15,0,2,0,3,0,4,0,3
+bdd-for-all,org.accenture.testing.bdd.comparison,Operator.new Operator() {...},0,15,0,2,0,3,0,4,0,3
+bdd-for-all,org.accenture.testing.bdd.comparison,Operator,2,54,0,0,1,6,1,1,1,1
+bdd-for-all,org.accenture.testing.bdd.comparison,Operator.new Operator() {...},0,15,0,2,0,3,0,4,0,3
+bdd-for-all,org.accenture.testing.bdd.comparison,Matcher.new Matcher() {...},1,15,1,1,0,3,1,3,0,3
+bdd-for-all,org.accenture.testing.bdd.comparison,Matcher.new Matcher() {...},0,12,0,0,0,3,0,3,0,3
+bdd-for-all,org.accenture.testing.bdd.comparison,Matcher,0,24,0,0,0,3,0,1,0,1
+bdd-for-all,org.accenture.testing.bdd,Main,3,44,0,0,1,13,1,2,1,2

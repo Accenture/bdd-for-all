@@ -1,0 +1,904 @@
+## SCENARIO: Simple GET request
+
+curl 'http://example.com/' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BS1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: example.com' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Domain override (BS1)
+
+curl 'http://example.com/' \
+  --request POST \
+  --header 'Content-Type: application/x-www-form-urlencoded; charset=ISO-8859-1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BS1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Length: 0' \
+  --header 'Host: example.com' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Before timeout (BS2)
+
+curl 'http://localhost:8181/delayed' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BS2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Status code (BS3)
+
+curl 'http://localhost:8181/404' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BS3' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Testing a post (BSJ1)
+
+curl 'http://localhost:8181/json/users/post' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BSJ2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/json; charset=utf-8' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '{}' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Simple SOAP endpoint (BSS1)
+
+curl 'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso' \
+  --request GET \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BSS1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/xml; charset=utf-8' \
+  --header 'Host: webservices.oorsprong.org' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '  <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+      <Body>
+          <ListOfContinentsByName xmlns="http://www.oorsprong.org/websamples.countryinfo"/>
+      </Body>
+  </Envelope>' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Simple SOAP endpoint with SOAPAction (BSS2)
+
+curl 'http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso' \
+  --request GET \
+  --header 'SOAPAction: http://www.SoapClient.com/SQLDataSQL' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BSS2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/xml; charset=utf-8' \
+  --header 'Host: webservices.oorsprong.org' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '  <Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/">
+      <Body>
+          <ProcessSQL xmlns="http://www.SoapClient.com/xml/SQLDataSoap.wsdl">
+              <DataSource>[string]</DataSource>
+              <SQLStatement>[string]</SQLStatement>
+              <UserName>[string]</UserName>
+              <Password>[string]</Password>
+          </ProcessSQL>
+      </Body>
+  </Envelope>' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test basic HTML functionality
+
+curl 'http://example.com/' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HTML1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: example.com' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test basic XML functionality
+
+curl 'http://localhost:8181/mirror' \
+  --request GET \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: PT1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/xml; charset=utf-8' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '<root>
+  <results>
+    <cnt>2</cnt>
+    <items>
+       <element>
+          <cost>10</cost>
+          <crazy-key>Crazy value 1</crazy-key>
+          <id>1</id>
+          <title>Example 1</title>
+       </element>
+       <element>
+          <cost>30</cost>
+          <crazy-key>Crazy value 2</crazy-key>
+          <id>2</id>
+          <title>Example 2</title>
+       </element>
+    </items>
+  </results>
+</root>' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Testing generating a few types of props and validation from cache (FT2)
+
+curl 'http://localhost:8181/mirror' \
+  --request GET \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: FT2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/json; charset=utf-8' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '{
+  "lead": {
+    "leadId": "692-97-2431",
+    "first_name": "Collin",
+    "last_name": "Emmerich",
+    "suffix": "I",
+    "phone": "name.phone,en-US",
+    "address": {
+      "line1": "590 McLaughlin Crossing",
+      "city": "Yostberg",
+      "state": "ME"
+    }
+  }
+}' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Testing generating a few types of props and validation from cache (FT2)
+
+curl 'http://localhost:8181/mirror' \
+  --request GET \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: FT2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/json; charset=utf-8' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '{
+  "lead": {
+    "leadId": "466-99-1001",
+    "first_name": "Cloyd",
+    "last_name": "Kerluke",
+    "suffix": "Sr.",
+    "phone": "name.phone,en-US",
+    "address": {
+      "line1": "30032 Bosco Lock",
+      "city": "North Gisselle",
+      "state": "VA"
+    }
+  }
+}' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Testing generating a few types of props and validation from cache (FT2)
+
+curl 'http://localhost:8181/mirror' \
+  --request GET \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: FT2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/json; charset=utf-8' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '{
+  "lead": {
+    "leadId": "645-31-3487",
+    "first_name": "Мария",
+    "last_name": "Никонов",
+    "suffix": "DVM",
+    "phone": "name.phone,ru",
+    "address": {
+      "line1": "улица Заводская, 161",
+      "city": "Брянск",
+      "state": "KY"
+    }
+  }
+}' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Testing generating a few types of props and validation from cache (FT2)
+
+curl 'http://localhost:8181/mirror' \
+  --request GET \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: FT2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/json; charset=utf-8' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '{
+  "lead": {
+    "leadId": "618-73-7358",
+    "first_name": "思源",
+    "last_name": "杨",
+    "suffix": "PhD",
+    "phone": "name.phone,zh-CN",
+    "address": {
+      "line1": "韦侬21号",
+      "city": "南都市",
+      "state": "新"
+    }
+  }
+}' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Testing generating a few types of props and validation from cache (FT2)
+
+curl 'http://localhost:8181/mirror' \
+  --request GET \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: FT2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Content-Type: application/json; charset=utf-8' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --data-binary '{
+  "lead": {
+    "leadId": "074-98-8465",
+    "first_name": "Manon",
+    "last_name": "Hubert",
+    "suffix": "DDS",
+    "phone": "name.phone,fr",
+    "address": {
+      "line1": "2682 Quai de Presbourg",
+      "city": "Ivry-sur-Seine",
+      "state": "TX"
+    }
+  }
+}' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending headers with stepdef (HS1)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header2: header2' \
+  --header 'header1: header1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending invalid headers with stepdef (HS2)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header1: header3' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending headers as datatable (HS3)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header2: header2' \
+  --header 'header1: header1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS3' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending invalid headers as datatable (HS4)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header2: header4' \
+  --header 'header1: header3' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS4' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test getting header value (HS5)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header2: header2' \
+  --header 'header1: header1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS5' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Chaining and header caching (HS6)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header2: header2' \
+  --header 'header1: header1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS6-1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+curl 'http://localhost:8181/json/users/1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS6-2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Header value match as datatable (HS7)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header2: header2' \
+  --header 'header1: header1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS7' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Header value match as datatable (HS8)
+
+curl 'http://localhost:8181/headers' \
+  --header 'header2: header2' \
+  --header 'header1: header1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: HS8' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending parameters normally (PS1)
+
+curl 'http://localhost:8181/params?param1=param1&param2=param2' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: PS1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending parameters with stepdef (PS2)
+
+curl 'http://localhost:8181/params?param1=param1&param2=param2' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: PS2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending invalid parameters with stepdef (PS3)
+
+curl 'http://localhost:8181/params?param1=param1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: PS3' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending parameters as datatable (PS4)
+
+curl 'http://localhost:8181/params?param1=param1&param2=param2' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: PS4' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test sending parameters as datatable (PS5)
+
+curl 'http://localhost:8181/params?param1=param1&param2=param3' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: PS5' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Mixing and matching add params (PS6)
+
+curl 'http://localhost:8181/params?param1=param1&param2=param2' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: PS3' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Request chaining & simple cache test (RSJ0)
+
+curl 'http://localhost:8181/json/users' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ0' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+curl 'http://localhost:8181/json/users/1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: BSJ1-2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test simple evaluation to true/false (RSJ1)
+
+curl 'http://localhost:8181/json/users' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ1' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test string matching (RSJ2)
+
+curl 'http://localhost:8181/json/users' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ2' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test integer matching (RSJ3)
+
+curl 'http://localhost:8181/json/users' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ3' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test float matching (RSJ4)
+
+curl 'http://localhost:8181/json/users' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ4' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Test boolean matching (RSJ5)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ5' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path occurs X number of times (RSJ7)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ7' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path occurs more than X times (RSJ8)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ8' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path occurs less than X times (RSJ9)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ9' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path occurances are equal to or more than X times (RSJ10)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ10' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path occurances are less than or equal to X times (RSJ11)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ11' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with value occurs X number of times (RSJ12)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ12' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with value occurs more than X times (RSJ13)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ13' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with value occurs less than X times (RSJ14)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ14' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with value occurances are equal to or more than X times (RSJ15)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ15' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with value occurances are less than or equal to X times (RSJ16)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ16' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with numeric value occurs X number of times (RSJ17)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ17' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with numeric value occurs more than X times (RSJ18)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ18' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with numeric value occurs less than X times (RSJ19)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ19' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with numeric value occurances are equal to or more than X times (RSJ20)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ20' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path with numeric value occurances are less than or equal to X times (RSJ21)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ21' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path has duplicates in collection (RSJ22)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ22' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Path has duplicates in collection (RSJ23)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ23' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Should contain the elements (RSJ24)
+
+curl 'http://localhost:8181/json/users/1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ24' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Should contain the elements (RSJ25)
+
+curl 'http://localhost:8181/json/users/1' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ25' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Elements match (RSJ26)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ26' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: Elements don't match (RSJ27)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ27' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: List of elements match (RSJ28)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ28' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+
+## SCENARIO: List of elements do not match (RSJ28)
+
+curl 'http://localhost:8181/json/todos' \
+  --header 'Accept: */*' \
+  --header 'X-Made-Up-Header1: Header Value 1' \
+  --header 'X-Correlation-ID: RSJ28' \
+  --header 'User-Agent: ACN-BDD-CUCUMBER' \
+  --header 'From: tester@example.com' \
+  --header 'Host: localhost:8181' \
+  --header 'Connection: Keep-Alive' \
+  --compressed \
+  --verbose
+

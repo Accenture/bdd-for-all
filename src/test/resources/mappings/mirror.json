@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/mirror"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "{{request.headers.Accept}}"
+    },
+    "body": "{{{request.body}}}",
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

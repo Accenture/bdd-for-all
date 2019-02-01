@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %encode{%msg}%n</Pattern>
+    </layout>
+  </appender>
+
+  <appender name="CURL" class="ch.qos.logback.core.FileAppender">
+    <file>logs/curl.log</file>
+    <append>true</append>
+    <encoder>
+      <pattern>%msg%n%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="STDOUT"/>
+  </root>
+
+  <logger name="curl" additivity="false">
+    <appender-ref ref="CURL"/>
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>DEBUG</level>
+    </filter>
+  </logger>
+
+</configuration>

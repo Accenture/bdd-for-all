@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/headers",
+    "headers": {
+      "X-Correlation-ID": {
+        "matches": ".*"
+      },
+      "header1": {
+        "matches": "header1"
+      },
+      "header2": {
+        "matches": "header2"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "user": "1",
+      "x-id": "2"
+    }
+  }
+}

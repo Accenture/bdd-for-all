@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/params?param1=param1&param2=param2"
+  },
+  "response": {
+    "status": 200
+  }
+}

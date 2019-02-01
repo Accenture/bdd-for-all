@@ -1,0 +1,13 @@
+.idea
+target/*
+logs/
+bdd-for-all.iml
+/bin/
+/target/
+.settings/
+.checkstyle
+.classpath
+.project
+bdd-for-all.iml
+dependency-reduced-pom.xml
+bdd-for-all.iml
