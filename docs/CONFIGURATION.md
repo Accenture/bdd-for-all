@@ -97,7 +97,7 @@ As you can see, headers are an array, so you can add as many as you want.
 
 By default, all application logging is to stdout, including test information.  This can make things a little hard to read, but we assume most already have logging configurations set up for their tests.  If not, and you're using logback - [use ours](../src/test/resources/logback.xml)...
 
-'''
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
@@ -122,7 +122,7 @@ By default, all application logging is to stdout, including test information.  T
 
 In addition to application logging, each request will also be logged as a cURL statement.  This, by default, is actually sent to logs/curl.log.  The logger for this is named "curl", you can easily turn this off, change the file, etc... by updating the configuration.  Below is ours...
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
