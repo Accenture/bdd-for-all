@@ -1,3 +1,9 @@
+BDD For All is a small, simple to use library that simplifies using Behavioral Driven Development (BDD) for API's.
+
+## Overview & Setup
+
+Check out [our project page on GitHub](https://github.com/Accenture/bdd-for-all/) for an overview while we get this site updated.
+
 ## Using
 
 For an overview on using cucumber, feature files and more, we highly recommend the [10 Minute Tutorial](https://docs.cucumber.io/guides/10-minute-tutorial/) from cucumber.io.
