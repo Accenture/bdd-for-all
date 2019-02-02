@@ -4,9 +4,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
+  <name>BDD For All</name>
+  <description>A simple to use, easy to integrate, BDD library for API and microservices development.</description>
+  <url>https://github.com/Accenture/bdd-for-all</url>
+
   <groupId>com.accenture.testing.bdd</groupId>
   <artifactId>bdd-for-all</artifactId>
-  <version>1.0</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
   <licenses>
@@ -47,6 +51,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <dependency.locations.enabled>false</dependency.locations.enabled>
     <java.version>1.8</java.version>
+    <gpg.keyname>50106680A93F0231</gpg.keyname>
   </properties>
 
   <dependencies>
@@ -327,20 +332,52 @@
       </plugin>
 
       <plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
         <executions>
           <execution>
-            <phase>package</phase>
+            <id>attach-sources</id>
             <goals>
-              <goal>single</goal>
+              <goal>jar-no-fork</goal>
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+            <configuration>
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+              <passphraseServerId>${gpg.keyname}</passphraseServerId>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
@@ -497,6 +534,17 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
 
     </plugins>
 
