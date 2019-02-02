@@ -514,6 +514,28 @@
       </plugin>
 
       <plugin>
+        <groupId>net.masterthought</groupId>
+        <artifactId>maven-cucumber-reporting</artifactId>
+        <version>4.4.0</version>
+        <executions>
+          <execution>
+            <id>execution</id>
+            <phase>test</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/site</outputDirectory>
+              <inputDirectory>${project.build.directory}</inputDirectory>
+              <jsonFiles>
+                <param>/cucumber/cucumber.json</param>
+              </jsonFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.1</version>

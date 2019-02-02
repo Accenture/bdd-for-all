@@ -22,7 +22,7 @@ This library provides you a few outputs while running and when complete.
     299 Steps (299 passed)
     0m13.737s  
   ```
-* If you haven't disabled it, you'll also have the cURL log, which provides [cURL representations](OTHERFEATURES.md#curl-logging-) of the tests.
+* If you haven't disabled it, you'll also have the cURL log, which provides [cURL representations](OTHERFEATURES.md#curl-logging) of the tests.
   ```sbtshell
   ## SCENARIO: Domain override (BS1)
   
@@ -53,7 +53,7 @@ This library provides you a few outputs while running and when complete.
     --compressed \
     --verbose
   ```
-* Next up, you have the [JaCoCo reports](OTHERFEATURES.md#jacoco-code-coverage-).  
+* Next up, you have the [JaCoCo reports](OTHERFEATURES.md#jacoco-code-coverage).  
   ![Sample JaCoCo Report](samples/jacoco.png "JaCoCo Sample Report")
 * And finally, if you followed the standard implementation instructions, you'll have you're Cucumber reports, which you'll find in your target directory in the "cucumber" folder. 
   > There are an array of plugins for "prettier" reports, which you can find at [https://docs.cucumber.io/cucumber/reporting/](https://docs.cucumber.io/cucumber/reporting/)

@@ -2,7 +2,7 @@
 
 We have some other cool features included as well...
 
-#### JaCoCo Code Coverage <a name="coverage">&nbsp;</a>
+#### JaCoCo Code Coverage
 
 If you are already using JaCoCo instrumentation with JUnit or TestNG, you should notice your test coverage increase.
 
@@ -10,7 +10,7 @@ As an example, check out the current coverage for this library [here](samples/ja
 
 With only 6 traditional unit tests, we achieve 94% test coverage because of the scenarios we've written.
 
-#### Running Select Tests (aka Tagging) <a name="tagging">&nbsp;</a>
+#### Running Select Tests (aka Tagging)
 
 Both features and scenarios can be marked up with tags (look like annotations).  They can be whatever you want, but what they do is allow you to group and filter tests that you want you run.
 
@@ -77,7 +77,7 @@ The output, provides us a unique list of the tags in use...
 
 Remember, big brother is watching!
 
-#### cURL Logging <a name="curl">&nbsp;</a>
+#### cURL Logging
 
 We know a lot of shops use Postman, SoapUI, and the like.  We do too!  By default, every time you run the application, a curl.log is output to the logs/ directory.
 
