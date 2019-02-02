@@ -48,7 +48,7 @@ In most environments, contributors - which include Product Owners, Subject Matte
 
 The developer then reviews the requirements (or acceptance criteria) and creates functionality to support, while running those scnearios as as tests with every change to confirm that there's been no regressions and that the feature is functionally complete.
 
-![The BDD + TDD Workflow](docs/samples/bdd+tdd.png "BDD + TDD Workflow")
+![The BDD + TDD Workflow](samples/bdd+tdd.png "BDD + TDD Workflow")
 
 ## Samples
 
