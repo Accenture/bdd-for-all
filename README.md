@@ -82,7 +82,7 @@ Please note, this will work for JUnit 4.  The cucumber-jvm library doesn't [supp
     @CucumberOptions(
         features = {"classpath:features"},
         plugin = {"pretty", "html:target/cucumber"},
-        glue = { "org.accenture.testing.bdd.api.steps" }
+        glue = { "com.accenture.testing.bdd.api.steps" }
     )
     public class RunCucumberTest {
     
@@ -101,7 +101,7 @@ Please note, this will work for JUnit 4.  The cucumber-jvm library doesn't [supp
     @CucumberOptions(
         features = ["src/test/resources/cucumber/features"],
         plugin = ["pretty", "html:target/cucumber"],
-        glue = [ "org.accenture.testing.bdd.api.steps" ]
+        glue = [ "com.accenture.testing.bdd.api.steps" ]
     )
     
     class RunKukesTest
@@ -122,7 +122,7 @@ Please note, this will work for JUnit 4.  The cucumber-jvm library doesn't [supp
     @CucumberOptions(
       features = Array("classpath:features"),
       plugin = Array("pretty", "html:target/cucumber"),
-      glue = Array("org.accenture.testing.bdd.api.steps")
+      glue = Array("com.accenture.testing.bdd.api.steps")
     )
     class RunCucumberTest
     

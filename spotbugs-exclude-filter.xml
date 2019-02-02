@@ -13,21 +13,21 @@
   <!-- False positive, detects setting different settings the same -->
   <Match>
     <Bug pattern="PRMC_POSSIBLY_REDUNDANT_METHOD_CALLS">
-      <Class name="org.accenture.testing.bdd.util.BDDConfig" />
+      <Class name="com.accenture.testing.bdd.util.BDDConfig" />
       <Method name="getHttpConfig" />
     </Bug>
   </Match>
 
   <Match>
     <Bug pattern="REDOS">
-      <Class name="org.accenture.testing.bdd.http.RequestState" />
+      <Class name="com.accenture.testing.bdd.http.RequestState" />
     </Bug>
   </Match>
 
   <!-- False positives => ignoring, classes are accessing the curel logger -->
   <Match>
     <Bug pattern="LO_SUSPECT_LOG_CLASS">
-      <Class name="org.accenture.testing.bdd.api.steps.*"/>
+      <Class name="com.accenture.testing.bdd.api.steps.*"/>
     </Bug>
   </Match>
 
