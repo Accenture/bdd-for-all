@@ -20,10 +20,6 @@
         margin: 0 0;
       }
 
-      #breadcrumb {
-        font-size: smaller;
-      }
-
     </style>
 
 {% seo %}
@@ -38,7 +34,7 @@
             <a id="forkme_banner" href="{{ site.github.repository_url }}">View on GitHub</a>
           {% endif %}
 
-          <a href="/"><img src="{{ site.logo }}" alt="{{ site.title | default: site.github.repository_name }}"/></a>
+          <a href="{{ '/' | append: site.github.repository_name }}"><img src="{{ site.logo }}" alt="{{ site.title | default: site.github.repository_name }}"/></a>
           <h2 id="project_tagline">{{ site.description | default: site.github.project_tagline }}</h2>
 
           {% if site.show_downloads %}
