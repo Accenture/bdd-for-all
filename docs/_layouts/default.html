@@ -20,6 +20,10 @@
         margin: 0 0;
       }
 
+      #back_home {
+        font-size: smaller;
+      }
+
     </style>
 
 {% seo %}
@@ -50,6 +54,7 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         {{ content }}
+        <p id="back_home">> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> </p>
       </section>
     </div>
 

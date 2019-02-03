@@ -116,9 +116,9 @@ By default, all application logging is to stdout, including test information.  T
   ...
 
 </configuration>
-'''
+```
 
-### cURL logging <a name="#curlog">&nbsp;</a>
+### cURL logging
 
 In addition to application logging, each request will also be logged as a cURL statement.  This, by default, is actually sent to logs/curl.log.  The logger for this is named "curl", you can easily turn this off, change the file, etc... by updating the configuration.  Below is ours...
 
