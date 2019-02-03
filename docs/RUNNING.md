@@ -2,10 +2,13 @@
 
 Adding BDD for All to your application is easy...
 
-1. First, [install BDD For All](INSTALLING.md).
-1. Next, in the root of the directory you place your test classes in (typically src/test/java for JAVA projects, src/test/kotlin for Kotlin projects, etc...), place the following...
-  * For JAVA
-    ```java
+First off you'll need to [install BDD For All](INSTALLING.md).
+
+Next, in the root of the directory you place your test classes in (typically src/test/java for JAVA projects, src/test/kotlin for Kotlin projects, etc...), place the following...
+
+##### Java
+
+```java
     import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
     
     import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
@@ -28,9 +31,11 @@ Adding BDD for All to your application is easy...
       // initialize your server or mocks
 
     }
-    ```
-  * For Kotlin
-    ```kotlin
+```
+
+##### Kotlin
+
+```kotlin
     import cucumber.api.CucumberOptions
     import cucumber.api.junit.Cucumber
     import org.junit.runner.RunWith
@@ -45,50 +50,55 @@ Adding BDD for All to your application is easy...
     
     class RunKukesTest
   
-    // initialize your server or mocks
+    // initialize your server or mocks  
+```
+
+##### Scala
+```scala
+import cucumber.api.CucumberOptions
+import cucumber.api.junit.Cucumber
+import org.junit.ClassRule
+import org.junit.Rule
+import org.junit.runner.RunWith
+
+
+@RunWith(classOf[Cucumber])
+@CucumberOptions(
+  features = Array("classpath:features"),
+  plugin = Array("pretty", "html:target/cucumber"),
+  glue = Array("com.accenture.testing.bdd.api.steps")
+)
+class RunCucumberTest
+
+// initialize your server or mocks
+```
+
+You'll want to start up your mocks or server as the harness assumes a running server. This class can use standard JUnit annotations, @ClassRule, @BeforeClass, @AfterClass.
+
+> For an example using wiremock, checkout our test runner - [src/test/java/RunCucumberTest.java](../src/test/java/RunCucumberTest.java)
+
+Drop the application.conf and logback-test.xml files from [src/test/resources](../src/test/resources) into your test resources directory.
+
+* If you already have logback, just add the configurations
+* In the application.conf file...
+  * Update the server.host to be your url (no need to specify port if normal HTTP/HTTPS)
+  * Remove the sample header section, modify or add your own
   
-    ```
-    > Please note, this will work for JUnit 4.  The cucumber-jvm library doesn't [support 5 yet](https://github.com/cucumber/cucumber-jvm/issues/1149).
-  * For Scala
-    ```scala
-    import cucumber.api.CucumberOptions
-    import cucumber.api.junit.Cucumber
-    import org.junit.ClassRule
-    import org.junit.Rule
-    import org.junit.runner.RunWith
+###### Creating Your First Feature File
   
-    
-    @RunWith(classOf[Cucumber])
-    @CucumberOptions(
-      features = Array("classpath:features"),
-      plugin = Array("pretty", "html:target/cucumber"),
-      glue = Array("com.accenture.testing.bdd.api.steps")
-    )
-    class RunCucumberTest
-    
-    // initialize your server or mocks
-  
-    ```
-1. You'll want to start up your mocks or server as the harness assumes a running server. This class can use standard JUnit annotations, @ClassRule, @BeforeClass, @AfterClass.
-  * For an example using wiremock, checkout our test runner - [src/test/java/RunCucumberTest.java](../src/test/java/RunCucumberTest.java)
-1. Drop the application.conf and logback-test.xml files from [src/test/resources](../src/test/resources) into your test resources directory.
-  * If you already have logback, just add the configurations
-  * In the application.conf file...
-    * Update the server.host to be your url (no need to specify port if normal HTTP/HTTPS)
-    * * Remove the sample header section, modify or add your own
-1. Now let's add your first .feature file
-  * Create a directory called features in your test/resources directory
-  * Create a file called Tests.feature with the following content...
-  ```gherkin
-  Feature: My first feature file
-  Scenario: Check I can connect
-    Given I am a JSON API consumer
-      And I am executing test "CONN_TEST"
-     When I request GET "/"
-     Then I should get a status code of 200
-  ```
-  Make sure to replace "/" with a valid path on your server.
-* Finally execute your test (e.g. `mvn test`, `sbt test`, `gradle test`)
+* Create a directory called features in your test/resources directory
+* Create a file called Tests.feature with the following content...
+```gherkin
+Feature: My first feature file
+Scenario: Check I can connect
+  Given I am a JSON API consumer
+    And I am executing test "CONN_TEST"
+   When I request GET "/"
+   Then I should get a status code of 200
+```
+Make sure to replace "/" with a valid path on your server.
+
+Finally execute your test (e.g. `mvn test`, `sbt test`, `gradle test`)
 
 You should see the test execute on screen and whether it passed or failed.  You can also look at...
 
