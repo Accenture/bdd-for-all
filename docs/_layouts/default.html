@@ -42,7 +42,11 @@
         padding-top: 0;
       }
 
-      .inner {
+      #main_content.inner {
+        padding: 0;
+      }
+
+      .section_content {
         padding: 0 10px;
       }
 
@@ -76,7 +80,9 @@
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
         <p id="breadcrumb" class="top"><strong>Quick Links:</strong> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a> | <a href="{{ site.github.repository_url }}">View on GitHub</a></p>
-        {{ content }}
+        <div class="section_content">
+          {{ content }}
+        </div>
         <p id="breadcrumb" class="bottom"><strong>Quick Links:</strong> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a> | <a href="{{ site.github.repository_url }}">View on GitHub</a></p>
       </section>
     </div>
