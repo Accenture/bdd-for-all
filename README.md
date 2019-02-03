@@ -53,7 +53,7 @@ The [test](src/test/resources/features/) directory has a variety of sample featu
 
 ## Using
 
-For the definitive guide, checkout the [docs](docs/).
+For the definitive guide, checkout the [User Guide](docs/USERGUIDE.md).
 
 
 

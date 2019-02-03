@@ -20,12 +20,8 @@
         margin: 0 0;
       }
 
-      #forkme_banner {
-        linear-gradient(#74cae3, #5bc0de 60%, #4ab9db);
-      }
-
-      #forkme_banner.gray {
-        linear-gradient(#8a9196, #7A8288 60%, #70787d);
+      #breadcrumb {
+        font-size: smaller;
       }
 
     </style>
@@ -39,7 +35,6 @@
     <div id="header_wrap" class="outer">
         <header class="inner">
           {% if site.github.is_project_page %}
-            <a id="forkme_banner" class="gray" href="USERGUIDE">User Guide</a>
             <a id="forkme_banner" href="{{ site.github.repository_url }}">View on GitHub</a>
           {% endif %}
 
@@ -58,8 +53,9 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
+        <p id="breadcrumb">> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a></p>
         {{ content }}
-        <p id="back_home">> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> </p>
+        <p id="breadcrumb">> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a></p>
       </section>
     </div>
 
