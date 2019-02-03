@@ -22,13 +22,20 @@
 
       #breadcrumb {
         font-size: smaller;
-        margin-top: 0;
         background-color: #FFFFFF;
-        margin: 0 0 20px 0;
         padding: 8px 15px;
         border-style: solid;
         border: 1px solid #101113;
+      }
+
+      #breadcrumb.top {
+        margin: 0 0 20px 0;
         border-top: 0;
+      }
+
+      #breadcrumb.bottom {
+        margin: 20px 0 0 0;
+        border-bottom: 0;
       }
 
       #main_content {
@@ -68,9 +75,9 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p id="breadcrumb"><strong>Quick Links:</strong> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a> | <a href="{{ site.github.repository_url }}">View on GitHub</a></p>
+        <p id="breadcrumb" class="top"><strong>Quick Links:</strong> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a> | <a href="{{ site.github.repository_url }}">View on GitHub</a></p>
         {{ content }}
-        <p id="breadcrumb"><strong>Quick Links:</strong> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a> | <a href="{{ site.github.repository_url }}">View on GitHub</a></p>
+        <p id="breadcrumb" class="bottom"><strong>Quick Links:</strong> <a href="{{ '/' | append: site.github.repository_name }}">Home</a> | <a href="USERGUIDE">User Guide</a> | <a href="{{ site.github.repository_url }}">View on GitHub</a></p>
       </section>
     </div>
 
