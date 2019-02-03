@@ -38,7 +38,7 @@
             <a id="forkme_banner" href="{{ site.github.repository_url }}">View on GitHub</a>
           {% endif %}
 
-          <a href="{{ relative_url }}"><img src="{{ site.logo }}" alt="{{ site.title | default: site.github.repository_name }}"/></a>
+          <a href="/"><img src="{{ site.logo }}" alt="{{ site.title | default: site.github.repository_name }}"/></a>
           <h2 id="project_tagline">{{ site.description | default: site.github.project_tagline }}</h2>
 
           {% if site.show_downloads %}
@@ -53,7 +53,6 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p id="breadcrumb">> <a href="{{ relative_url }}">Home</a></p>
         {{ content }}
       </section>
     </div>
