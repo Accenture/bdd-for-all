@@ -19,6 +19,11 @@
         padding-bottom: 0;
         margin: 0 0;
       }
+
+      #breadcrumb {
+        font-size: smaller;
+      }
+
     </style>
 
 {% seo %}
@@ -48,7 +53,7 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p><a href="{{ relative_url }}">Home</a></p>
+        <p class="breadcrumb">> <a href="{{ relative_url }}">Home</a></p>
         {{ content }}
       </section>
     </div>
