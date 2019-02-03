@@ -20,8 +20,12 @@
         margin: 0 0;
       }
 
-      #back_home {
-        font-size: smaller;
+      #forkme_banner {
+        linear-gradient(#74cae3, #5bc0de 60%, #4ab9db);
+      }
+
+      #forkme_banner.gray {
+        linear-gradient(#8a9196, #7A8288 60%, #70787d);
       }
 
     </style>
@@ -35,6 +39,7 @@
     <div id="header_wrap" class="outer">
         <header class="inner">
           {% if site.github.is_project_page %}
+            <a id="forkme_banner" class="gray" href="USERGUIDE">User Guide</a>
             <a id="forkme_banner" href="{{ site.github.repository_url }}">View on GitHub</a>
           {% endif %}
 
