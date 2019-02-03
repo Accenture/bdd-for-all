@@ -25,6 +25,14 @@ This library provides a lot of help out of the box to fix this...
 * Simple [intuitive reporting](REPORTING.md) out of the box.
 * [Expressions](OTHERFEATURES.md#running-select-tests-aka-tagging) that allow you easily choose what tests to run (e.g. smoke, regression, etc...).
 
+## Process at a Glance
+
+In most environments, contributors - which include Product Owners, Subject Matter Experts, Architects, Solution Owner/Architects, Tech/Team Leads, and more - create [scenarios](docs/SCENARIOS.md) which are added to [feature files](docs/FEATURES.md). In most cases these are added to existing project repositories (or newly created ones).
+
+The developer then reviews the requirements (or acceptance criteria) and creates functionality to support, while running those scnearios as as tests with every change to confirm that there's been no regressions and that the feature is functionally complete.
+
+![The BDD + TDD Workflow](samples/bdd+tdd.png "BDD + TDD Workflow")
+
 ## Using
 
 For an overview on using cucumber, feature files and more, we highly recommend the [10 Minute Tutorial](https://docs.cucumber.io/guides/10-minute-tutorial/) from cucumber.io.
@@ -42,16 +50,7 @@ The following documentation explains our particular implementation of BDD using 
 * [Reporting](REPORTING.md)
 * [Configuration & Logging](CONFIGURATION.md)
 
-## Process at a Glance
-
-In most environments, contributors - which include Product Owners, Subject Matter Experts, Architects, Solution Owner/Architects, Tech/Team Leads, and more - create [scenarios](docs/SCENARIOS.md) which are added to [feature files](docs/FEATURES.md). In most cases these are added to existing project repositories (or newly created ones).
-
-The developer then reviews the requirements (or acceptance criteria) and creates functionality to support, while running those scnearios as as tests with every change to confirm that there's been no regressions and that the feature is functionally complete.
-
-![The BDD + TDD Workflow](samples/bdd+tdd.png "BDD + TDD Workflow")
 
 ## Samples
 
 The [test](../src/test/resources/features/) directory has a variety of sample feature files that show how to use all the features of the library.
-
-> Want to [contribute](../CONTRIBUTING.md)?
