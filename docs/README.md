@@ -2,8 +2,8 @@ No longer do your business, development and testing teams need to translate each
 
 * [Why This?](#why-this)
 * [Process at a Glance](#process-at-a-glance)
-* [Using](#using)
-* [In Action](#in-action)
+* [Users Guide](#users-guide)
+* [See It In Action](#see-it-in-action)
 
 ## Why This?
 
@@ -33,7 +33,7 @@ The developer then reviews the requirements (or acceptance criteria) and creates
 
 ![The BDD + TDD Workflow](samples/bdd+tdd.png "BDD + TDD Workflow")
 
-## Using
+## Users Guide
 
 For an overview on using cucumber, feature files and more, we highly recommend the [10 Minute Tutorial](https://docs.cucumber.io/guides/10-minute-tutorial/) from cucumber.io.
 
@@ -51,6 +51,6 @@ The following documentation explains our particular implementation of BDD using 
 * [Configuration & Logging](CONFIGURATION.md)
 
 
-## In Action
+## See It In Action
 
 The [test](../src/test/resources/features/) directory has a variety of sample feature files that show how to use all the features of the library.
