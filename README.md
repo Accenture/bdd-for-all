@@ -1,4 +1,4 @@
-Quick Links: [User Guide](docs/USERGUIDE.md) | [Running](docs/RUNNING.md) | [Grammar](docs/GRAMMAR.md)
+**Quick Links:** [User Guide](docs/USERGUIDE.md) | [Running](docs/RUNNING.md) | [Grammar](docs/GRAMMAR.md)
 
 ![BDD For All](docs/samples/bdd-white-logo.png)
 
