@@ -12,7 +12,7 @@ Feature: Testing out the basic step definitions for JSON
       """
      Then I should get a status code of 201
 
-  @Smoke @Json @GPath
+  @Smoke @Json @GPath @ResponseMatch
   Scenario: Test setting up JSON as table (BSJ2)
     Given I am a JSON API consumer
       And I am executing test "BSJ2"
