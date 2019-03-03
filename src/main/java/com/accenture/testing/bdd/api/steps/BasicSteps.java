@@ -14,6 +14,7 @@ import io.restassured.http.ContentType;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.jalokim.propertiestojson.util.PropertiesToJsonConverter;
@@ -158,7 +159,12 @@ public class BasicSteps implements En {
         "^I set the (JSON|XML) body from values$",
         (String type, DataTable table) -> {
           Map<String,String> props = table.asMap(String.class,String.class);
-          String body = new PropertiesToJsonConverter().convertToJson(props);
+          Map<String,String> transformed = props.entrySet().stream()
+              .collect(Collectors.toMap(
+                 e -> e.getKey(),
+                 e -> paramTransformer.transform(e.getValue())
+              ));
+          String body = new PropertiesToJsonConverter().convertToJson(transformed);
           requestState.setHeader("Content-Type", ContentType.valueOf(type).withCharset("utf-8"));
           requestState.setBody(paramTransformer.transform(body));
         });
