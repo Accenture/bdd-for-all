@@ -50,7 +50,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <dependency.locations.enabled>false</dependency.locations.enabled>
-    <java.version>1.8</java.version>
+    <java.version>11</java.version>
     <gpg.keyname>50106680A93F0231</gpg.keyname>
   </properties>
 
@@ -233,6 +233,13 @@
         <version>27.0.1-jre</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.2</version>
+        <scope>provided</scope>
+      </dependency>
+
     </dependencies>
 
   </dependencyManagement>
@@ -244,7 +251,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
-        <version>2.9</version>
+        <version>3.0.0</version>
       </plugin>
 
       <plugin>
@@ -282,13 +289,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>2.5</version>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.0</version>
       </plugin>
 
       <plugin>
@@ -383,6 +390,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>aspectj-maven-plugin</artifactId>
+        <version>1.11</version>
         <executions>
           <execution>
             <id>compile</id>
@@ -402,6 +410,7 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+          <release>${java.version}</release>
         </configuration>
       </plugin>
 
