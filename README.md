@@ -41,7 +41,7 @@ This library provides a lot of help out of the box to fix this...
 * Simple [intuitive reporting](docs/REPORTING.md) out of the box.
 * [Expressions](docs/OTHERFEATURES.md#running-select-tests-aka-tagging) that allow you easily choose what tests to run (e.g. smoke, regression, etc...).
 
-## How's it Work?
+## How's it Work??
 
 In most environments, contributors - which include Product Owners, Subject Matter Experts, Architects, Solution Owner/Architects, Tech/Team Leads, and more - create [scenarios](docs/SCENARIOS.md) which are added to [feature files](docs/FEATURES.md). In most cases these are added to existing project repositories (or newly created ones).
 
