@@ -26,4 +26,4 @@ jobs:
       with:
         java-version: 11
     - name: Validate the build
-      run: mvn verify
+      run: mvn verify -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
