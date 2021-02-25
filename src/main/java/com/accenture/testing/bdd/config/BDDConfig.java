@@ -1,6 +1,6 @@
 package com.accenture.testing.bdd.config;
 
-import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
+import com.github.dzieciou.testing.curl.CurlRestAssuredConfigFactory;
 import com.github.dzieciou.testing.curl.Options;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -16,8 +16,7 @@ public class BDDConfig {
       RestAssuredConfig.config().sslConfig(getSSLConfig()).httpClient(getHttpConfig());
 
   static {
-    RestAssured.config =
-        CurlLoggingRestAssuredConfigFactory.updateConfig(restAssuredConfig, getCurlOptions());
+    RestAssured.config = CurlRestAssuredConfigFactory.updateConfig(restAssuredConfig, getCurlOptions());
   }
 
   /**

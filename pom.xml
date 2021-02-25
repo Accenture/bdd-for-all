@@ -62,6 +62,9 @@
     <typesafe.version>1.4.1</typesafe.version>
     <cucumber.version>6.10.0</cucumber.version>
     <logback.version>1.2.3</logback.version>
+    <rest-assured.version>4.3.3</rest-assured.version>
+    <curl-logger.version>2.0.0</curl-logger.version>
+    <faker.version>1.0.2</faker.version>
 
     <maven-reports.version>3.1.1</maven-reports.version>
     <checkstyle.version>3.1.2</checkstyle.version>
@@ -137,43 +140,19 @@
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <version>3.2.0</version>
+      <version>${rest-assured.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.dzieciou.testing</groupId>
       <artifactId>curl-logger</artifactId>
-      <version>1.0.3</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.owasp</groupId>
-      <artifactId>security-logging-logback</artifactId>
-      <version>1.1.6</version>
-    </dependency>
-
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>${curl-logger.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.javafaker</groupId>
       <artifactId>javafaker</artifactId>
-      <version>0.16</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jooq</groupId>
-      <artifactId>joor-java-8</artifactId>
-      <version>0.9.7</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>27.0.1-jre</version>
+      <version>${faker.version}</version>
     </dependency>
 
     <dependency>
