@@ -41,9 +41,9 @@ public class Main {
     args.add("-p");
     args.add("pretty");
 
-    RuntimeOptions propertiesFileOptions = (new CucumberPropertiesParser()).parse(CucumberProperties.fromPropertiesFile()).build();
-    RuntimeOptions environmentOptions = (new CucumberPropertiesParser()).parse(CucumberProperties.fromEnvironment()).build(propertiesFileOptions);
-    RuntimeOptions systemOptions = (new CucumberPropertiesParser()).parse(CucumberProperties.fromSystemProperties()).build(environmentOptions);
+    RuntimeOptions propertiesFileOptions = new CucumberPropertiesParser().parse(CucumberProperties.fromPropertiesFile()).build();
+    RuntimeOptions environmentOptions = new CucumberPropertiesParser().parse(CucumberProperties.fromEnvironment()).build(propertiesFileOptions);
+    RuntimeOptions systemOptions = new CucumberPropertiesParser().parse(CucumberProperties.fromSystemProperties()).build(environmentOptions);
     CommandlineOptionsParser commandlineOptionsParser = new CommandlineOptionsParser(System.out);
     RuntimeOptions runtimeOptions = commandlineOptionsParser.parse(args.stream().toArray(String[]::new)).addDefaultGlueIfAbsent().addDefaultFeaturePathIfAbsent().addDefaultFormatterIfAbsent().addDefaultSummaryPrinterIfAbsent().enablePublishPlugin().build(systemOptions);
     Optional<Byte> exitStatus = commandlineOptionsParser.exitStatus();
