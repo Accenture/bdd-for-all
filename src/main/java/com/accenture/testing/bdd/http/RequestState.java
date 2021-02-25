@@ -1,6 +1,6 @@
 package com.accenture.testing.bdd.http;
 
-import com.accenture.testing.bdd.util.BDDConfig;
+import com.accenture.testing.bdd.config.BDDConfig;
 import com.typesafe.config.Config;
 import io.restassured.http.Method;
 import java.util.ArrayList;
@@ -10,21 +10,21 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class RequestState {
 
-  private static final Logger LOG = LoggerFactory.getLogger(RequestState.class);
   private static Config config = BDDConfig.getConfig();
   private static Pattern QS_PATTERN = Pattern.compile("(\\w+)=?([^&]+)?");
-  private Map<String, List<String>> params = new HashMap<>();
-  private Map<String, String> headers = new HashMap<>();
-  private String body;
-  private Method httpMethod;
-  private String uri;
-  private String host;
+  @Getter Map<String, List<String>> parameters = new HashMap<>();
+  @Getter Map<String, String> headers = new HashMap<>();
+  @Getter @Setter String body;
+  @Getter String uri;
+  @Getter Method httpMethod;
+  @Getter @Setter String host;
 
   /**
    * get response object; will execute request. if it hasn't already been executed or it's been
@@ -36,7 +36,7 @@ public abstract class RequestState {
 
   /** resets the state of this object. */
   public void reset() {
-    params.clear();
+    parameters.clear();
     resetHeaders();
     body = null;
     httpMethod = null;
@@ -60,15 +60,6 @@ public abstract class RequestState {
   }
 
   /**
-   * get the HTTP method for this request.
-   *
-   * @return the http method.
-   */
-  public Method getHttpMethod() {
-    return httpMethod;
-  }
-
-  /**
    * set method for the request.
    *
    * @param method the request method
@@ -77,19 +68,10 @@ public abstract class RequestState {
     try {
       httpMethod = Method.valueOf(method);
     } catch (IllegalArgumentException iae) {
-      LOG.error("Not a valid httpmethod {}", method);
+      log.error("Not a valid httpmethod {}", method);
     } catch (NullPointerException npe) {
-      LOG.error("method was null");
+      log.error("method was null");
     }
-  }
-
-  /**
-   * get the URI for the request.
-   *
-   * @return the URI for the request
-   */
-  public String getURI() {
-    return uri;
   }
 
   /**
@@ -97,39 +79,12 @@ public abstract class RequestState {
    *
    * @param uri the uri for the request.
    */
-  public void setURI(String uri) {
+  public void setUri(String uri) {
     setParamsFromURI(uri);
     if (Objects.nonNull(uri) && uri.contains("?")) {
       uri = uri.substring(0, uri.indexOf('?'));
     }
     this.uri = uri;
-  }
-
-  /**
-   * get the URI for the request.
-   *
-   * @return the URI for the request
-   */
-  public String getHost() {
-    return host;
-  }
-
-  /**
-   * set the URI for the request.
-   *
-   * @param host the uri for the request.
-   */
-  public void setHost(String host) {
-    this.host = host;
-  }
-
-  /**
-   * get the request headers.
-   *
-   * @return the request headers
-   */
-  public Map<String, String> getHeaders() {
-    return headers;
   }
 
   /**
@@ -152,22 +107,13 @@ public abstract class RequestState {
   }
 
   /**
-   * Get request paramters.
-   *
-   * @return the request parameters
-   */
-  public Map<String, List<String>> getParameters() {
-    return params;
-  }
-
-  /**
    * get named parameter value.
    *
    * @param name the name of the parameter
    * @return the parameter value
    */
   public List<String> getParameter(String name) {
-    return params.get(name);
+    return parameters.get(name);
   }
 
   /**
@@ -194,27 +140,10 @@ public abstract class RequestState {
    * @param val the parameter value
    */
   public void setParameter(String name, String val) {
-    if (StringUtils.isBlank(name)) {
+    if (name == null || name.isBlank()) {
       return;
     }
-    params.computeIfAbsent(name, list -> new ArrayList<>()).add(val);
+    parameters.computeIfAbsent(name, list -> new ArrayList<>()).add(val);
   }
 
-  /**
-   * get the request body.
-   *
-   * @return the request body
-   */
-  public String getBody() {
-    return body;
-  }
-
-  /**
-   * set the request body.
-   *
-   * @param body the body as text
-   */
-  public void setBody(String body) {
-    this.body = body;
-  }
 }

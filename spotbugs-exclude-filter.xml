@@ -13,7 +13,7 @@
   <!-- False positive, detects setting different settings the same -->
   <Match>
     <Bug pattern="PRMC_POSSIBLY_REDUNDANT_METHOD_CALLS">
-      <Class name="com.accenture.testing.bdd.util.BDDConfig" />
+      <Class name="com.accenture.testing.bdd.config.BDDConfig" />
       <Method name="getHttpConfig" />
     </Bug>
   </Match>

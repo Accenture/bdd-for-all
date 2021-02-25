@@ -1,9 +1,14 @@
 package com.accenture.testing.bdd;
 
-import cucumber.runtime.Runtime;
+import io.cucumber.core.options.CommandlineOptionsParser;
+import io.cucumber.core.options.CucumberProperties;
+import io.cucumber.core.options.CucumberPropertiesParser;
+import io.cucumber.core.options.RuntimeOptions;
+import io.cucumber.core.runtime.Runtime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
 
@@ -25,6 +30,7 @@ public class Main {
    */
   public static byte run(String[] argv, ClassLoader classLoader) {
 
+
     List<String> args = new ArrayList<String>(Arrays.asList(argv));
 
     // add the glue
@@ -35,12 +41,19 @@ public class Main {
     args.add("-p");
     args.add("pretty");
 
-    final Runtime runtime = Runtime.builder()
-        .withArgs(args.toArray(new String[0]))
-        .withClassLoader(classLoader)
-        .build();
-
-    runtime.run();
-    return runtime.exitStatus();
+    RuntimeOptions propertiesFileOptions = (new CucumberPropertiesParser()).parse(CucumberProperties.fromPropertiesFile()).build();
+    RuntimeOptions environmentOptions = (new CucumberPropertiesParser()).parse(CucumberProperties.fromEnvironment()).build(propertiesFileOptions);
+    RuntimeOptions systemOptions = (new CucumberPropertiesParser()).parse(CucumberProperties.fromSystemProperties()).build(environmentOptions);
+    CommandlineOptionsParser commandlineOptionsParser = new CommandlineOptionsParser(System.out);
+    RuntimeOptions runtimeOptions = commandlineOptionsParser.parse(args.stream().toArray(String[]::new)).addDefaultGlueIfAbsent().addDefaultFeaturePathIfAbsent().addDefaultFormatterIfAbsent().addDefaultSummaryPrinterIfAbsent().enablePublishPlugin().build(systemOptions);
+    Optional<Byte> exitStatus = commandlineOptionsParser.exitStatus();
+    if (!exitStatus.isPresent()) {
+      Runtime runtime = Runtime.builder().withRuntimeOptions(runtimeOptions).withClassLoader(() -> {
+        return classLoader;
+      }).build();
+      runtime.run();
+      return runtime.exitStatus();
+    }
+    return exitStatus.get();
   }
 }

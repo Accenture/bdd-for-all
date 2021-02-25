@@ -1,4 +1,4 @@
-package com.accenture.testing.bdd.util;
+package com.accenture.testing.bdd.config;
 
 import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
 import com.github.dzieciou.testing.curl.Options;
