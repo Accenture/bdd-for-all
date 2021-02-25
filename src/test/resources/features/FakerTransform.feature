@@ -14,7 +14,7 @@ Feature: Testing out faker transformers
           "first_name": "{{faker::name.firstName,en-US}}",
           "last_name": "{{faker::name.lastName,en-US}}",
           "suffix": "{{faker::name.suffix,en-US}}",
-          "phone": "{{faker::name.phone,en-US}}",
+          "phone": "{{faker::phoneNumber.cellPhone,en-US}}",
           "address": {
             "line1": "{{faker::address.streetAddress,en-US}}",
             "city": "{{faker::address.city,en-US::city}}",
@@ -40,7 +40,7 @@ Feature: Testing out faker transformers
           "first_name": "{{faker::name.firstName,<LANG>}}",
           "last_name": "{{faker::name.lastName,<LANG>}}",
           "suffix": "{{faker::name.suffix,<LANG>}}",
-          "phone": "{{faker::name.phone,<LANG>}}",
+          "phone": "{{faker::phoneNumber.cellPhone,<LANG>}}",
           "address": {
             "line1": "{{faker::address.streetAddress,<LANG>}}",
             "city": "{{faker::address.city,<LANG>::city}}",

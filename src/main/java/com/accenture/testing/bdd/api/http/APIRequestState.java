@@ -4,33 +4,20 @@ import com.accenture.testing.bdd.http.ResponseState;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import com.accenture.testing.bdd.http.RequestState;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
 public class APIRequestState extends RequestState {
 
+  @ToString.Exclude
   private ResponseState responseState = null;
   private APIResponseStateType responseStateType;
-
-  /** simple constructor for injection. */
-  public APIRequestState() {}
-
-  /**
-   * helper to handle process of response body.
-   *
-   * @param type an API
-   */
-  public void setResponseStateType(APIResponseStateType type) {
-    responseStateType = type;
-  }
-
-  /**
-   * what type of processor should this use.
-   *
-   * @return the type processor to use
-   */
-  public APIResponseStateType getResponseStateType() {
-    return responseStateType;
-  }
 
   @Override
   public void reset() {
@@ -52,7 +39,7 @@ public class APIRequestState extends RequestState {
     }
 
     // set up the request
-    RequestSpecification request = RestAssured.given().baseUri(getHost()).basePath(getURI());
+    RequestSpecification request = RestAssured.given().baseUri(getHost()).basePath(getUri());
 
     // set up test headers
     getHeaders()
@@ -80,11 +67,6 @@ public class APIRequestState extends RequestState {
     responseState.getResponse().body().asString();
 
     return responseState;
-  }
-
-  @Override
-  public String toString() {
-    return ReflectionToStringBuilder.toString(this);
   }
 
 }

@@ -1,5 +1,6 @@
 package com.accenture.testing.bdd.parameters;
 
+import com.accenture.testing.bdd.exception.NotImplementedException;
 import com.accenture.testing.bdd.http.ResponseState;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.NotImplementedException;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
+@ToString
+@EqualsAndHashCode
 public class ParamTransformer {
-
-  private static final Logger LOG = LoggerFactory.getLogger(ParamTransformer.class);
 
   private static final Pattern PATTERN = Pattern.compile("\\{\\{(.*?)\\:\\:(.*?)(\\:\\:(.*?))?}}");
   private final List<ParamTransform> transforms = new ArrayList<>();
@@ -129,17 +130,12 @@ public class ParamTransformer {
         }
 
       } catch (Exception e) {
-        LOG.error("Trying to replace {}", matcher.group(0), e);
+        log.error("Trying to replace {}", matcher.group(0), e);
         throw e;
       }
     }
 
     return ret;
-  }
-
-  @Override
-  public String toString() {
-    return ReflectionToStringBuilder.toString(this);
   }
 
 }

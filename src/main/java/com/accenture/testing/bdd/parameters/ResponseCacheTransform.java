@@ -1,7 +1,9 @@
 package com.accenture.testing.bdd.parameters;
 
 import com.accenture.testing.bdd.http.ResponseState;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode
 public class ResponseCacheTransform extends ParamTransform {
 
   String key;

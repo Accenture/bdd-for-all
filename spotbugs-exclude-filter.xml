@@ -1,5 +1,10 @@
 <FindBugsFilter>
 
+  <!-- lombok loves -->
+  <Match>
+    <Bug pattern="USBR_UNNECESSARY_STORE_BEFORE_RETURN" />
+  </Match>
+
   <!-- we're ok with methods being exposed, this is a shared library and should be used creatively -->
   <Match>
     <Bug pattern="OPM_OVERLY_PERMISSIVE_METHOD"/>
@@ -13,7 +18,7 @@
   <!-- False positive, detects setting different settings the same -->
   <Match>
     <Bug pattern="PRMC_POSSIBLY_REDUNDANT_METHOD_CALLS">
-      <Class name="com.accenture.testing.bdd.util.BDDConfig" />
+      <Class name="com.accenture.testing.bdd.config.BDDConfig" />
       <Method name="getHttpConfig" />
     </Bug>
   </Match>

@@ -1,6 +1,6 @@
 package com.accenture.testing.bdd.parameters;
 
-import com.accenture.testing.bdd.util.BDDConfig;
+import com.accenture.testing.bdd.config.BDDConfig;
 import com.typesafe.config.Config;
 import java.util.Objects;
 

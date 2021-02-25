@@ -5,11 +5,11 @@ import static org.junit.Assert.assertTrue;
 import com.accenture.testing.bdd.api.http.APIRequestState;
 import com.accenture.testing.bdd.api.http.APIResponseStateType;
 import com.accenture.testing.bdd.parameters.DefaultParamTransformer;
-import com.accenture.testing.bdd.util.BDDConfig;
+import com.accenture.testing.bdd.config.BDDConfig;
 import com.typesafe.config.Config;
-import cucumber.api.Scenario;
-import cucumber.api.java8.En;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java8.En;
+import io.cucumber.java8.Scenario;
 import io.restassured.http.ContentType;
 import java.util.Locale;
 import java.util.Map;
@@ -22,7 +22,7 @@ import pl.jalokim.propertiestojson.util.PropertiesToJsonConverter;
 public class BasicSteps implements En {
 
   private static Config config = BDDConfig.getConfig();
-  private static final Logger CURL_LOG = LoggerFactory.getLogger("curl");
+  private static final Logger curl_log = LoggerFactory.getLogger("curl");
 
   /**
    * container for cucumber lambda methods.
@@ -35,7 +35,7 @@ public class BasicSteps implements En {
     /** reset the request state */
     Before(
         (Scenario scenario) -> {
-          CURL_LOG.debug("## SCENARIO: {}", scenario.getName());
+          curl_log.debug("## SCENARIO: {}", scenario.getName());
         });
 
     /**
@@ -116,7 +116,7 @@ public class BasicSteps implements En {
         (String method, String uri) -> {
           uri = paramTransformer.transform(uri);
           requestState.setHttpMethod(method);
-          requestState.setURI(uri);
+          requestState.setUri(uri);
         });
 
     /**
@@ -132,7 +132,7 @@ public class BasicSteps implements En {
           uri = paramTransformer.transform(uri);
           host = paramTransformer.transform(host);
           requestState.setHttpMethod(method);
-          requestState.setURI(uri);
+          requestState.setUri(uri);
           requestState.setHost(host);
         });
 
