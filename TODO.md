@@ -7,4 +7,6 @@
 * Documentation
   * Other Features (more in depth)
   * Setup (TestNG)
+* Maven Site
+  * Update project info
 * Sample project (sub)
