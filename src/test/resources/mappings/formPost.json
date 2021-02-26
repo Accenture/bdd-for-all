@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/formPost",
+    "bodyPatterns": [
+      {
+        "contains": "first=mike",
+        "contains": "last=something"
+      }
+    ]
+  },
+  "response": {
+    "status": 200
+  }
+}

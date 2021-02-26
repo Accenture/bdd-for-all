@@ -66,7 +66,8 @@
     <curl-logger.version>2.0.0</curl-logger.version>
     <faker.version>1.0.2</faker.version>
 
-    <maven-reports.version>3.1.1</maven-reports.version>
+    <maven-site.version>3.7.1</maven-site.version>
+    <maven-reports.version>3.0.0</maven-reports.version>
     <checkstyle.version>3.1.2</checkstyle.version>
     <spotbugs.version>4.0.4</spotbugs.version>
     <findsecritybugs.version>1.10.1</findsecritybugs.version>
@@ -204,6 +205,24 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>2.18.1</version>
+        <reportSets>
+          <reportSet>
+            <id>unit-tests</id>
+            <reports>
+              <report>report-only</report>
+            </reports>
+            <configuration>
+              <linkXRef>true</linkXRef>
+              <alwaysGenerateSurefireReport>true</alwaysGenerateSurefireReport>
+            </configuration>
+          </reportSet>
+        </reportSets>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
         <configuration>
@@ -252,7 +271,6 @@
         <reportSets>
           <reportSet>
             <reports>
-              <!-- select non-aggregate reports -->
               <report>report</report>
             </reports>
           </reportSet>
@@ -287,6 +305,12 @@
       </plugin>
 -->
       <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.7-SNAPSHOT</version>
+      </plugin>
+
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>${maven-source.version}</version>
@@ -299,6 +323,13 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>${maven-site.version}</version>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>

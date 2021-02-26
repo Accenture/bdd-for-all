@@ -21,8 +21,10 @@ We wanted to create a simple lexicon with this library. Although there are many 
 | 5   | I set the (JSON\|XML) body to                                                                                         | Request    | Set's the body as well as the content type based on the content provided.                                                                     | [examples](#payloads) |
 | 5a  | I set the (JSON\|XML) body from values                                                                                | Request    | Set's the body as well as the content type based on the content provided using a datatable of name value pairs and dot notations (e.g. users[0].name) | [examples](#payloads) |
 | 6   | I set the SOAPAction to {string} and body as                                                                          | Request    | Shortcut to supply a SOAPAction in addition to the payload.  An alternative to calling the above step and adding a header step.               | [examples](#payloads) |
-| 7   | I provide the parameter {string} with a value of {string}                                                             | Request    | Allows you to set individual parameters - an alternative to setting them as part of the path (e.g. /path?param=param)                         | [examples](#params) |
-| 8   | I provide the parameters                                                                                              | Request    | Provide a list of parameters as a datatable - an alternative to setting them as part of the path (e.g. /path?param=param&param2=param2...)    | [examples](#params) |
+| 7   | I am submitting a form                                                                                                | Request    | Ensures any params (or files) are packaged as form variables                                                                                  | [examples](#form) |
+| 8a  | I provide the parameter {string} with a value of {string}                                                             | Request    | Allows you to set individual parameters - an alternative to setting them as part of the path (e.g. /path?param=param)                         | [examples](#params) |
+| 8b  | I provide the parameters                                                                                              | Request    | Provide a list of parameters as a datatable - an alternative to setting them as part of the path (e.g. /path?param=param&param2=param2...)    | [examples](#params) |
+| 8c  | I provide the file {string} at {string} as {string  }                                                                 | Response   | Submit a file (multipart) - it's location is relative to where app is launched. (1) is param name, (2) is file location, & 3 is content type  | [examples](#form) |
 | 9   | I provide the header {string} with a value of {string}                                                                | Request    | Add a named header to the request in addition to the default headers you can add through [configuration](CONFIGURATION.md).                   | [examples](#headers) |
 | 10  | I provide the headers                                                                                                 | Request    | Add a set of headers using a datatable                                                                                                        | [examples](#headers) |
 | 11  | I should get a status code of {int}                                                                                   | Request    | Match the response code returned by the server                                                                                                | [examples](#basics) |
@@ -135,6 +137,51 @@ As you can see, we're sending the same request three different ways.
 * SCENARIO 3 - When you have a lot of params and need the names/values encoded, this would be the best method.
 
 > Remember, it's all about readability!
+
+#### Setting up Form Parameters <a name="form">&nbsp;</a>[(back to top)](#top)
+
+To do a form submit, it's a simple as adding `I am submitting a form` to your scenario.  From there, you can use parameters, 
+but instead of querystring, they'll be moved to the body.
+
+```gherkin
+@Upload
+Feature: Testing out uploads
+
+  @Smoke
+  Scenario: Simple form parameter example
+    Given I am a JSON API consumer
+    And I am executing test "US01"
+    When I request POST "/formPost"
+    And I am submitting a form
+    And I provide the parameter "first" with a value of "mike"
+    And I provide the parameter "last" with a value of "something"
+    And I should get a status code of 200
+
+  @Smoke
+  Scenario: Simple upload example
+    Given I am a JSON API consumer
+    And I am executing test "US01"
+    When I request POST "/uploadFile"
+    And I am submitting a form
+    And I provide the file "file" at "src/test/resources/data/file.txt" as "text/plain"
+    And I should get a status code of 200
+
+  Scenario: Upload file with form parameters
+    Given I am a JSON API consumer
+    And I am executing test "US01"
+    When I request POST "/uploadFileX"
+    And I am submitting a form
+    And I provide the file "file" at "src/test/resources/data/file.txt" as "text/plain"
+    And I provide the parameter "first" with a value of "mike"
+    And I provide the parameter "last" with a value of "something"
+    And I should get a status code of 200
+```
+
+You can use the same syntax from the params section (Scenarios 2 & 3) as well, a couple of important notes on forms, though...
+
+1. For this to work, don't forget the `I am submitting a form`
+2. When submitting a file, the request will automatically switch to multipart
+3. File paths are relative.  This is important when running from the command line
 
 #### Request Payloads <a name="payloads">&nbsp;</a>[(back to top)](#top)
 

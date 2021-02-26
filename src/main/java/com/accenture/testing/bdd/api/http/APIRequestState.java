@@ -4,6 +4,7 @@ import com.accenture.testing.bdd.http.ResponseState;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import com.accenture.testing.bdd.http.RequestState;
+import java.io.File;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -49,16 +50,25 @@ public class APIRequestState extends RequestState {
             });
 
     // parameters
+    // if we're multi-part (e.g. has upload) then use form params
     getParameters()
         .forEach(
             (name, list) -> {
-              request.queryParam(name, list);
+              if (getIsForm()) request.formParam(name, list);
+              else request.queryParam(name, list);
             });
 
     // set the body (if needed)
     if (getBody() != null) {
       request.body(getBody());
     }
+
+    // set the files (if needed)
+    getFiles()
+        .forEach(
+            (name, fileDetail) -> {
+            request.multiPart(name, new File(fileDetail.getFile()), fileDetail.getMediaType());
+        });
 
     // perform the request
     responseState = new APIResponseState(request.request(getHttpMethod()), getResponseStateType());
