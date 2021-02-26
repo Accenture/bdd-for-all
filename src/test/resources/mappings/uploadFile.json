@@ -1,0 +1,9 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/uploadFile"
+  },
+  "response": {
+    "status": 200
+  }
+}

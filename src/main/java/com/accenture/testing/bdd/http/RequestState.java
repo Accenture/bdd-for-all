@@ -21,10 +21,12 @@ public abstract class RequestState {
   private static Pattern QS_PATTERN = Pattern.compile("(\\w+)=?([^&]+)?");
   @Getter Map<String, List<String>> parameters = new HashMap<>();
   @Getter Map<String, String> headers = new HashMap<>();
+  @Getter Map<String, FileInfo> files = new HashMap<>();
   @Getter @Setter String body;
   @Getter String uri;
   @Getter Method httpMethod;
   @Getter @Setter String host;
+  @Getter @Setter Boolean isForm = Boolean.FALSE;
 
   /**
    * get response object; will execute request. if it hasn't already been executed or it's been
@@ -37,11 +39,13 @@ public abstract class RequestState {
   /** resets the state of this object. */
   public void reset() {
     parameters.clear();
+    files.clear();
     resetHeaders();
     body = null;
     httpMethod = null;
     uri = null;
     setHost(config.getString("request.server.host"));
+    setIsForm(Boolean.FALSE);
   }
 
   /**
@@ -144,6 +148,17 @@ public abstract class RequestState {
       return;
     }
     parameters.computeIfAbsent(name, list -> new ArrayList<>()).add(val);
+  }
+
+  /**
+   * add header name/value to the request.
+   *
+   * @param name the header name
+   * @param file the file location
+   * @param type the media type
+   */
+  public void addFile(String name, String file, String type) {
+    files.put(name, FileInfo.newInstance(type, file));
   }
 
 }

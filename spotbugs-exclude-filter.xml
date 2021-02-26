@@ -1,5 +1,10 @@
 <FindBugsFilter>
 
+  <!-- this isn't a server app, need to accept paths -->
+  <Match>
+    <Bug pattern="PATH_TRAVERSAL_IN" />
+  </Match>
+
   <!-- lombok loves -->
   <Match>
     <Bug pattern="USBR_UNNECESSARY_STORE_BEFORE_RETURN" />
