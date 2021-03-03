@@ -1,5 +1,9 @@
 **Quick Links:** [User Guide](docs/USERGUIDE.md) | [Running](docs/RUNNING.md) | [Grammar](docs/GRAMMAR.md)
 
+[![Snapshot Build](https://github.com/Accenture/bdd-for-all/actions/workflows/maven.yml/badge.svg)](https://github.com/Accenture/bdd-for-all/actions/workflows/maven.yml) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.accenture.testing.bdd/bdd-for-all/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.accenture.testing.bdd/bdd-for-all)
+
+**Latest snapshots can be found on [Sonatype](https://oss.sonatype.org/#nexus-search;quick~bdd-for-all)**
+
 ![Logo](docs/samples/bdd-white-logo.png)
 
 No longer do your business, development and testing teams need to translate each others requirements and reports into something else to do their job.  This natural language, [behavior-driven development (BDD)](https://en.wikipedia.org/wiki/Behavior-driven_development) library exists to simplify the documenting of requirements and the testing of your API's.

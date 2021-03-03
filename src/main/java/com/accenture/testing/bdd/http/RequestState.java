@@ -1,23 +1,24 @@
 package com.accenture.testing.bdd.http;
 
 import com.accenture.testing.bdd.config.BDDConfig;
-import com.typesafe.config.Config;
 import io.restassured.http.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 
 @Slf4j
 public abstract class RequestState {
 
-  private static Config config = BDDConfig.getConfig();
+  private static HierarchicalConfiguration config = BDDConfig.getConfig();
   private static Pattern QS_PATTERN = Pattern.compile("(\\w+)=?([^&]+)?");
   @Getter Map<String, List<String>> parameters = new HashMap<>();
   @Getter Map<String, String> headers = new HashMap<>();
@@ -54,13 +55,13 @@ public abstract class RequestState {
    */
   public void resetHeaders() {
     headers.clear();
-    config
-        .getObjectList("request.defaults.headers")
-        .forEach(
-            obj -> {
-              Map<String, Object> header = obj.unwrapped();
-              header.forEach((k, v) -> setHeader(k, v.toString()));
-            });
+    Properties props = config.getProperties("request.defaults.headers");
+    props.keySet().stream()
+        .forEach(item -> {
+          String key = item.toString();
+          log.info("HEADER: {} with {}", key, props.getProperty(key));
+          setHeader(key, props.getProperty(key));
+        });
   }
 
   /**
@@ -144,7 +145,7 @@ public abstract class RequestState {
    * @param val the parameter value
    */
   public void setParameter(String name, String val) {
-    if (name == null || name.isBlank()) {
+    if (name == null || name.chars().allMatch(Character::isWhitespace)) {
       return;
     }
     parameters.computeIfAbsent(name, list -> new ArrayList<>()).add(val);

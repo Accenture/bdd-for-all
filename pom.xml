@@ -48,7 +48,7 @@
 
   <properties>
 
-    <java.version>11</java.version>
+    <java.version>1.8</java.version>
 
     <gpg.keyname>9214A23FFFD40E1F</gpg.keyname>
 
@@ -109,9 +109,9 @@
     </dependency>
 
     <dependency>
-      <groupId>com.typesafe</groupId>
-      <artifactId>config</artifactId>
-      <version>${typesafe.version}</version>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-configuration2</artifactId>
+      <version>2.7</version>
     </dependency>
 
     <dependency>
@@ -305,12 +305,6 @@
       </plugin>
 -->
       <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.7-SNAPSHOT</version>
-      </plugin>
-
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>${maven-source.version}</version>
@@ -370,8 +364,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${compiler-plugin.version}</version>
         <configuration>
-          <source>11</source>
-          <target>11</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>
 

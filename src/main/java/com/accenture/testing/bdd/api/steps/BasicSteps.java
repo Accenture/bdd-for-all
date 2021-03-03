@@ -6,7 +6,6 @@ import com.accenture.testing.bdd.api.http.APIRequestState;
 import com.accenture.testing.bdd.api.http.APIResponseStateType;
 import com.accenture.testing.bdd.parameters.DefaultParamTransformer;
 import com.accenture.testing.bdd.config.BDDConfig;
-import com.typesafe.config.Config;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java8.En;
 import io.cucumber.java8.Scenario;
@@ -15,13 +14,14 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.jalokim.propertiestojson.util.PropertiesToJsonConverter;
 
 public class BasicSteps implements En {
 
-  private static Config config = BDDConfig.getConfig();
+  private static HierarchicalConfiguration config = BDDConfig.getConfig();
   private static final Logger curl_log = LoggerFactory.getLogger("curl");
 
   /**
@@ -69,7 +69,7 @@ public class BasicSteps implements En {
         "I'm a {string}",
         (String consumer) -> {
           requestState.reset();
-          String type = config.getConfig("consumers").getString(consumer);
+          String type = config.configurationAt("consumers").getString(consumer);
           requestState.setResponseStateType(APIResponseStateType.valueOf(type));
         });
 
