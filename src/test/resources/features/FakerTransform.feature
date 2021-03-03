@@ -17,7 +17,7 @@ Feature: Testing out faker transformers
           "phone": "{{faker::phoneNumber.cellPhone,en-US}}",
           "address": {
             "line1": "{{faker::address.streetAddress,en-US}}",
-            "city": "{{faker::address.city,en-US::city}}",
+            "city": "{{faker::address.cityName,en-US::city}}",
             "state": "{{faker::address.stateAbbr,en-US}}"
           }
         }
@@ -43,7 +43,7 @@ Feature: Testing out faker transformers
           "phone": "{{faker::phoneNumber.cellPhone,<LANG>}}",
           "address": {
             "line1": "{{faker::address.streetAddress,<LANG>}}",
-            "city": "{{faker::address.city,<LANG>::city}}",
+            "city": "{{faker::address.cityName,<LANG>::city}}",
             "state": "{{faker::address.stateAbbr,<LANG>}}"
           }
         }

@@ -1,0 +1,37 @@
+######
+## unless noted otherwise, configuration elements
+## apply to ALL requests and as always RTFM
+## https://github.com/Accenture/bdd-for-all/blob/develop/docs/CONFIGURATION.md
+###
+bdd-for-all:
+  request:
+    server:
+      ## the server to execute requests against
+      host: "http://localhost:8181"
+    ## the user agent sent over in the headers
+    userAgent: "ACN-BDD-CUCUMBER"
+    ## the name of the transaction id sent in the headers
+    correlationIdName: "X-Correlation-ID"
+    defaults:
+      ## array of custom headers
+      headers:
+        - "X-Made-Up-Header1": "Header Value 1"
+        - "From": "tester@example.com"
+  ## alternative contexts
+  ## so instead of saying - Given I am a JSON API consumer -
+  ## you can say things like - Given I'm a "Mobile device" -
+  ## and map it to a known consumer (e.g. JSON)
+  consumers:
+    - "Mobile device": JSON
+  ## custom variables that will be available to you in your
+  ## feature files
+  vars:
+    User:
+      Name:
+        First: Mike
+  ## The rest assured configuration
+  http:
+    connection:
+      managerTimeout: 10000
+      requestTimeout: 10000
+      socketTimeout: 10000

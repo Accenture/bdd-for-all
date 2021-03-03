@@ -1,0 +1,4 @@
+### exists to test loader
+bdd-for-all:
+  request:
+    userAgent: "EXAMPLE"

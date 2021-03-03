@@ -59,26 +59,12 @@ In this case, when generating the data to send, we also told the program to cach
 
 You can also use variables straight out of your config in your tests.  Let's use the example below...
 
-```
-bddcore {
-
-  ...
-
-  vars {
-
-    User {
-
-      Name {
-
-        First = "Mike"
-
-      }
-
-    }
-
-  }
-
-}
+```yaml
+bdd-for-all:
+  vars:
+    User:
+      Name:
+        First: Mike
 ```
 By adding in a "vars" section to the config, you can inject all sorts of things into your tests.  For example, with the above configuration, we could write a simple test like...
 ```gherkin

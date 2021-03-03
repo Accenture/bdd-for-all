@@ -1,0 +1,13 @@
+bdd-for-all:
+  request:
+    server:
+      host: "http://localhost:8080"
+    userAgent: "ACN-BDD-CUCUMBER2"
+    correlationIdName: "X-Correlation-ID"
+    defaults:
+      headers:
+  http:
+    connection:
+      managerTimeout: 10000
+      requestTimeout: 10000
+      socketTimeout: 10000
