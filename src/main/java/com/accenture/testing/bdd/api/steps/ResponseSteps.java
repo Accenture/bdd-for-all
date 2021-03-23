@@ -1,6 +1,6 @@
 package com.accenture.testing.bdd.api.steps;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 import com.accenture.testing.bdd.api.http.APIRequestState;
 import com.accenture.testing.bdd.comparison.Operator;
@@ -40,12 +40,9 @@ public class ResponseSteps implements En {
         "I should get a status code of {int}",
         (Integer statusCode) -> {
           Integer status = requestState.getResponseState().getResponse().getStatusCode();
-          assertEquals(
-              String.format(
-                  "Expected status code of %d, but got %d from %s",
-                  statusCode, status, requestState.getUri()),
-              statusCode,
-              status);
+          assertThat(statusCode)
+              .as("Expected status code of %d, but got %d from %s", statusCode, status, requestState.getUri())
+              .isEqualTo(status);
         });
 
     /**

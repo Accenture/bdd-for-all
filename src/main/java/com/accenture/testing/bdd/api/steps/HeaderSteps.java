@@ -1,15 +1,15 @@
 package com.accenture.testing.bdd.api.steps;
 
+import static org.assertj.core.api.Assertions.*;
+
 import com.accenture.testing.bdd.api.http.APIRequestState;
 import com.accenture.testing.bdd.comparison.Matcher;
 import com.accenture.testing.bdd.parameters.DefaultParamTransformer;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java8.En;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
-import org.junit.Assert;
 
 public class HeaderSteps implements En {
 
@@ -67,8 +67,7 @@ public class HeaderSteps implements En {
           String hv =
               Optional.of(requestState.getResponseState().getResponse().getHeader(name))
                   .orElse("<EMPTY>");
-          Assert.assertTrue(
-              String.format("Expected %s to be %s was %s", name, val, hv), Objects.equals(hv, val));
+          assertThat(val).as("Exact header match for %s", name).isEqualTo(hv);
         });
 
     /**
@@ -87,8 +86,9 @@ public class HeaderSteps implements En {
             String hv =
                 Optional.of(requestState.getResponseState().getResponse().getHeader(name))
                     .orElse("<EMPTY>");
-            Assert.assertTrue(
-                String.format("Expected %s to be %s was %s", name, val, hv), Matcher.valueOf(operation.get()).match(val, hv));
+            assertThat(Matcher.valueOf(operation.get()).match(val, hv))
+                .as("Expected %s to be %s was %s", name, val, hv)
+                .isTrue();
           });
         });
   }

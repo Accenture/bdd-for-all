@@ -9,7 +9,20 @@ bdd-for-all:
       host: "http://localhost:8181"
     userAgent: "ACN-BDD-CUCUMBER"
     correlationIdName: "X-Correlation-ID"
+   ## the cucumber properties
+  cucumber:
+     plugin: "pretty, json:target/cucumber/primary-cucumber.json"
+     glue: "com.accenture.testing.bdd.api.steps"
+     ### Could pass through JAVA file too
+     features: "src/test/resources/features"
+     ### keeps that annoying message off screen
+     ### around publisher
+     publish:
+        quiet: true
 ```
+
+> You'll notice the cucumber setting are stored here as well, instead of using the @CucumberOptions annotation.  
+> See [src/main/resources/application.yml](src/main/resources/application.yml) for the latest options.
 
 This is usually stored in application.yml file and for your convenience we use Spring's loading preferences.  That means...
 

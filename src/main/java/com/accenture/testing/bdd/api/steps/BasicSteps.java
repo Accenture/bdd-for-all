@@ -1,6 +1,6 @@
 package com.accenture.testing.bdd.api.steps;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 
 import com.accenture.testing.bdd.api.http.APIRequestState;
 import com.accenture.testing.bdd.api.http.APIResponseStateType;
@@ -15,13 +15,14 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.jalokim.propertiestojson.util.PropertiesToJsonConverter;
 
 public class BasicSteps implements En {
 
-  private static HierarchicalConfiguration config = BDDConfig.getConfig();
+  private static final HierarchicalConfiguration<ImmutableNode> config = BDDConfig.getConfig();
   private static final Logger curl_log = LoggerFactory.getLogger("curl");
 
   /**
@@ -99,10 +100,9 @@ public class BasicSteps implements En {
         "I request a maximum response time of {long}",
         (Long timeout) -> {
           long actual = requestState.getResponseState().getResponse().getTime();
-          assertTrue(
-              String.format(
-                  "Request expected to return in %d or less, but returned in %d", timeout, actual),
-              timeout >= actual);
+          assertThat(actual)
+              .as("Request expected to return in %d or less", timeout)
+              .isLessThanOrEqualTo(timeout);
         });
 
     /**

@@ -1,4 +1,4 @@
-Feature: Testing out the request step definitions for SOAP
+Feature: Testing out the response step definitions for XML
 
   Scenario: Request chaining & simple cache test (RSS0)
 

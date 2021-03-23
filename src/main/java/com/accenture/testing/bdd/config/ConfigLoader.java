@@ -28,6 +28,14 @@ import org.apache.commons.configuration2.tree.OverrideCombiner;
 public class ConfigLoader {
 
   /**
+   * system property (non-spring)
+   */
+  static final String[] USER_DEFINED_PATHS = {
+      "bddforall.config",
+      "spring.config.additional-location"
+  };
+
+  /**
    * classpath based file
    */
   static final String CLASSPATH_START = "classpath:";
@@ -63,7 +71,7 @@ public class ConfigLoader {
 
   /**
    * mimics spring path configuration loading
-   * @link https://docs.spring.io/spring-boot/docs/1.0.1.RELEASE/reference/html/boot-features-external-config.html#boot-features-external-config-application-property-files
+   * @link https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-external-config.html#boot-features-external-config-application-property-files
    * @return list of potential paths (files and directories) to look for configuration
    */
   final List<String> getPaths() {
@@ -78,16 +86,20 @@ public class ConfigLoader {
         .collect(Collectors.toList());
 
     // user provided
-    String xtra = System.getProperty("spring.config.additional-location");
-    if (xtra != null) {
-      Arrays.stream(xtra
-          .split(","))
-          .forEach(str -> {
-            log.debug("Searching Custom Path: {} ", str);
-            List<String> adtl = getPaths(str);
-            if (!adtl.isEmpty()) ret.addAll(adtl);
-          });
-    }
+    Arrays.stream(USER_DEFINED_PATHS).forEach(name -> {
+
+      String xtra = System.getProperty(name);
+      if (xtra != null) {
+        Arrays.stream(xtra
+            .split(","))
+            .forEach(str -> {
+              log.debug("Searching Custom Path: {} ", str);
+              List<String> adtl = getPaths(str);
+              if (!adtl.isEmpty()) ret.addAll(adtl);
+            });
+      }
+
+    });
 
     return ret;
   }

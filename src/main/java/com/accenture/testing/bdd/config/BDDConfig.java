@@ -29,7 +29,14 @@ public class BDDConfig {
    * @return initialized config for project
    */
   public static HierarchicalConfiguration<ImmutableNode> getConfig() {
-    return CONFIG.configurationAt("bdd-for-all");
+    try {
+      return CONFIG.configurationAt("bdd-for-all");
+    }
+    catch (Exception e) {
+      log.info("Couldn't find a BDD configuration");
+      log.debug("NO BDD CONFIGURATION", e);
+    }
+    return CONFIG;
   }
 
   /**
@@ -70,10 +77,10 @@ public class BDDConfig {
    */
   public static HttpClientConfig getHttpConfig() {
     return HttpClientConfig.httpClientConfig()
-        .setParam("http.connection.timeout", getConfig().getInt("http.connection.requestTimeout"))
-        .setParam("http.socket.timeout", getConfig().getInt("http.connection.socketTimeout"))
+        .setParam("http.connection.timeout", getConfig().getInt("http.connection.requestTimeout", 10000))
+        .setParam("http.socket.timeout", getConfig().getInt("http.connection.socketTimeout", 10000))
         .setParam(
             "http.connection-manager.timeout",
-            getConfig().getInt("http.connection.managerTimeout"));
+            getConfig().getInt("http.connection.managerTimeout", 10000));
   }
 }

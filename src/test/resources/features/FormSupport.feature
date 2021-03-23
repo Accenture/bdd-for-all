@@ -1,5 +1,5 @@
 @Upload
-Feature: Testing out uploads
+Feature: Testing out form uploads
 
   @Smoke
   Scenario: Simple form parameter example
