@@ -56,3 +56,6 @@ bdd-for-all:
     ## around publisher
     publish:
       quiet: true
+    ## fails on undefined steps
+    execution:
+      strict: true

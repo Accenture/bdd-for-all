@@ -20,6 +20,7 @@ We wanted to create a simple lexicon with this library. Although there are many 
 | 4   | I request (GET\|POST\|PUT\|PATCH\|DELETE) {string} on {string}                                                                            | Request    | Set's the request type and path for the request, while overriding the [default host](CONFIGURATION.md) for the request.                       | [examples](#basics) |
 | 5   | I set the (JSON\|XML) body to                                                                                         | Request    | Set's the body as well as the content type based on the content provided.                                                                     | [examples](#payloads) |
 | 5a  | I set the (JSON\|XML) body from values                                                                                | Request    | Set's the body as well as the content type based on the content provided using a datatable of name value pairs and dot notations (e.g. users[0].name) | [examples](#payloads) |
+| 5a  | I set the (JSON\|XML) body from {values}                                                                              | Request    | Set's the body as well as the content type based on the content provided using a file from disk                                               | [examples](#payloads) |
 | 6   | I set the SOAPAction to {string} and body as                                                                          | Request    | Shortcut to supply a SOAPAction in addition to the payload.  An alternative to calling the above step and adding a header step.               | [examples](#payloads) |
 | 7   | I am submitting a form                                                                                                | Request    | Ensures any params (or files) are packaged as form variables                                                                                  | [examples](#form) |
 | 8a  | I provide the parameter {string} with a value of {string}                                                             | Request    | Allows you to set individual parameters - an alternative to setting them as part of the path (e.g. /path?param=param)                         | [examples](#params) |
@@ -222,14 +223,14 @@ There are times - a lot of them - when we need to send over a JSON or XML payloa
       And I am executing test "BSJ2"
      When I request GET "/mirror"
       And I set the JSON body from values
-      | users[0].id        | 1      |
-      | users[0].name      | Mike   |
-      | users[0].favorites | 1,2,3  |
-      | users[0].active    | true   |
-      | users[1].id        | 2      |
-      | users[1].name      | Bob    |
-      | users[1].favorites | 4,7,9  |
-      | users[1].active    | false  |
+      | users[0].id        | 1        |
+      | users[0].name      | Mike     |
+      | users[0].favorites | [1,2,3]  |
+      | users[0].active    | true     |
+      | users[1].id        | 2        |
+      | users[1].name      | Bob      |
+      | users[1].favorites | [4,7,9]  |
+      | users[1].active    | false    |
      Then I should get a status code of 200
       And evaluating "users.count{ it.id == 1 } == 1" should return true
       And evaluating "users[0].id == 4" should return false
@@ -271,6 +272,8 @@ For the third scenario, we're using data tables.  Using a simple "dot notation",
 ```
 
 As you can see, we can have simple and complex objects, numbers and booleans all with this simple syntax.  Some teams find this easier to use when working with the business.
+
+Since we're calling out features, you'll notice that *favorites* which is surrounded in brackets (e.g. []).  If you use brackets, any contents will be converted to an array with comma as a separator.
 
 Another important note, this will add one of the following headers based on the type of payload...
 

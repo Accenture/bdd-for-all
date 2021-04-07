@@ -72,7 +72,7 @@ public class RunCucumberTests {
 ```
 
 The above reports all the cucumber cases back to JUnit in a really simple way.  This method utilizes the 
-[src/main/java/com/accenture/testing/bdd/cucumber/BDDEventListener.java](src/main/java/com/accenture/testing/bdd/cucumber/BDDEventListener.java) 
+[../src/main/java/com/accenture/testing/bdd/cucumber/BDDEventListener.java](../src/main/java/com/accenture/testing/bdd/cucumber/BDDEventListener.java) 
 which could come in handy in a few situations.
 
 ##### Kotlin
@@ -138,7 +138,7 @@ You can just execute the JAR file as well.
 
 * Download the jar from Maven https://mvnrepository.com/artifact/com.accenture.testing.bdd/bdd-for-all)
 * Execute `java -Dbddforall.config=<PATH_TO_CONFIG> -jar bdd-for-all-1.0-SNAPSHOT-jar-with-dependencies.jar <OPTIONS> <PATH_TO_FEATURE_FILE(S)>`
-  * PATH_TO_CONFIG - relative or full-qualified path to application.conf file (example [src/test/resources/application.conf](../src/test/resources/application.conf))
+  * PATH_TO_CONFIG - relative or full-qualified path to application.conf file (example [../src/test/resources/application.yml](../src/test/resources/application.yml))
   * OPTIONS - Pass the -h (or --help) switch here to see all available options
     * If specifying the name of a particular feature file you can also specify line numbers (e.g. My.feature:2:9) would load scenarios from lines 2 and 9
 

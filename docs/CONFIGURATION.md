@@ -22,7 +22,7 @@ bdd-for-all:
 ```
 
 > You'll notice the cucumber setting are stored here as well, instead of using the @CucumberOptions annotation.  
-> See [src/main/resources/application.yml](src/main/resources/application.yml) for the latest options.
+> See [../src/main/resources/application.yml](../src/main/resources/application.yml) for the latest options.
 
 This is usually stored in application.yml file and for your convenience we use Spring's loading preferences.  That means...
 
@@ -60,7 +60,7 @@ For the latest configuration options, just check out our test config at [../src/
 
 ## Basic Logging
 
-By default, all application logging is to a logs directory, including test information.  We're using Sl4j which is likely to be compatible from a configuration standpoint with your Java app.  You can see our default configuration [here](../src/test/resources/logback.xml), it's pretty straight forward except for one thing...
+By default, all application logging is to a logs directory, including test information.  We're using Sl4j which is likely to be compatible from a configuration standpoint with your Java app.  You can see our default configuration [here](../src/test/resources/logback-test.xml), it's pretty straight forward except for one thing...
 
 ### cURL logging
 
