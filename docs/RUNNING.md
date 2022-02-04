@@ -6,82 +6,109 @@ First off you'll need to [install BDD For All](INSTALLING.md).
 
 Next, in the root of the directory you place your test classes in (typically src/test/java for JAVA projects, src/test/kotlin for Kotlin projects, etc...), place the following...
 
-##### Java
+### Java
+
+This should work with JUnit 4 or 5...
 
 ```java
-    import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-    
-    import com.github.tomakehurst.wiremock.common.Slf4jNotifier;
-    import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
-    import com.github.tomakehurst.wiremock.junit.WireMockRule;
-    import cucumber.api.CucumberOptions;
-    import cucumber.api.junit.Cucumber;
-    import org.junit.ClassRule;
-    import org.junit.Rule;
-    import org.junit.runner.RunWith;
-    
-    @RunWith(Cucumber.class)
-    @CucumberOptions(
-        features = {"classpath:features"},
-        plugin = {"pretty", "html:target/cucumber"},
-        glue = { "com.accenture.testing.bdd.api.steps" }
-    )
-    public class RunCucumberTest {
-    
-      // initialize your server or mocks
+import com.accenture.testing.bdd.BDDForAll;
+import org.junit.jupiter.api.Test;
 
-    }
+public class RunCucumberTests {
+
+  /**
+   * executes BDD tests, for reporting purposes
+   * we grab all the events as a factory
+   */
+  @Test
+  Stream<DynamicTest> testFeatures() {
+    
+    // initialize stuff
+
+    // run the test
+    BDDForAll bddForAll = new BDDForAll();
+    bddForAll.run();
+    
+    // clean up stuff
+    
+  }
+  
+}
 ```
+
+Or better yet in JUnit 5, simplify your reporting without extra plugins...
+
+```java
+import com.accenture.testing.bdd.BDDForAll;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.TestFactory;
+
+public class RunCucumberTests {
+
+  /**
+   * executes BDD tests, for reporting purposes
+   * we grab all the events as a factory
+   */
+  @TestFactory
+  Stream<DynamicTest> testFeatures() {
+
+    // run the test
+    BDDForAll bddForAll = new BDDForAll();
+    bddForAll.run();
+
+    // report each individually
+    return bddForAll.getEventListener()
+    .getTestCaseEventHandler()
+    .getFinishedItems()
+    .stream().map(item -> {
+      return DynamicTest.dynamicTest(item.getTestCase().getName(),
+          () -> Assertions.assertTrue(item.getResult().getStatus().isOk()));
+        });
+  }
+
+}
+```
+
+The above reports all the cucumber cases back to JUnit in a really simple way.  This method utilizes the 
+[../src/main/java/com/accenture/testing/bdd/cucumber/BDDEventListener.java](../src/main/java/com/accenture/testing/bdd/cucumber/BDDEventListener.java) 
+which could come in handy in a few situations.
 
 ##### Kotlin
 
 ```kotlin
-    import cucumber.api.CucumberOptions
-    import cucumber.api.junit.Cucumber
-    import org.junit.runner.RunWith
-    
-    
-    @RunWith(Cucumber::class)
-    @CucumberOptions(
-        features = ["src/test/resources/cucumber/features"],
-        plugin = ["pretty", "html:target/cucumber"],
-        glue = [ "com.accenture.testing.bdd.api.steps" ]
-    )
-    
-    class RunKukesTest
-  
-    // initialize your server or mocks  
+import com.accenture.testing.bdd.BDDForAll
+import org.junit.jupiter.api.Test
+class RunCucumberTests {
+  /**
+   * executes BDD tests, for reporting purposes
+   * we grab all the events as a factory
+   */
+  @Test
+  internal fun testFeatures():Stream<DynamicTest> {
+    // initialize stuff
+    // run the test
+    val bddForAll = BDDForAll()
+    bddForAll.run()
+    // clean up stuff
+
+  }
+}
 ```
 
-##### Scala
-```scala
-import cucumber.api.CucumberOptions
-import cucumber.api.junit.Cucumber
-import org.junit.ClassRule
-import org.junit.Rule
-import org.junit.runner.RunWith
-
-
-@RunWith(classOf[Cucumber])
-@CucumberOptions(
-  features = Array("classpath:features"),
-  plugin = Array("pretty", "html:target/cucumber"),
-  glue = Array("com.accenture.testing.bdd.api.steps")
-)
-class RunCucumberTest
-
-// initialize your server or mocks
-```
+### Executing
 
 You'll want to start up your mocks or server as the harness assumes a running server. This class can use standard JUnit annotations, @ClassRule, @BeforeClass, @AfterClass.
 
 > For an example using wiremock, checkout our test runner - [src/test/java/RunCucumberTest.java](../src/test/java/RunCucumberTest.java)
 
-Drop the application.conf and logback-test.xml files from [src/test/resources](../src/test/resources) into your test resources directory.
+Drop the application.yml and logback-test.xml files from [src/test/resources](../src/test/resources) into your test resources directory.
 
 * If you already have logback, just add the configurations
-* In the application.conf file...
+* In the application.yml file...
   * Update the server.host to be your url (no need to specify port if normal HTTP/HTTPS)
+  * Update the feature path (or remove and pass in command line
   * Remove the sample header section, modify or add your own
   
 ###### Creating Your First Feature File
@@ -103,19 +130,16 @@ Finally execute your test (e.g. `mvn test`, `sbt test`, `gradle test`)
 You should see the test execute on screen and whether it passed or failed.  You can also look at...
 
 * logs/bdd-testrun.log and curl.log for their outputs
-* target/cucumber there should be an index.html for a cucumber report
-
-For more configuration options, checkout https://docs.cucumber.io/cucumber/api/#junit
+* checkout the "plugins" section for the paths to the reports.
 
 ### Running Stand Alone
 
 You can just execute the JAR file as well.
 
-* Download the jar [releases/releases/bdd-for-all-1.0-SNAPSHOT-jar-with-dependencies.jar](../releases/bdd-for-all-1.0-SNAPSHOT-jar-with-dependencies.jar)
-* Execute `java -Dconfig.file=<PATH_TO_CONFIG> -jar bdd-for-all-1.0-SNAPSHOT-jar-with-dependencies.jar <OPTIONS> <PATH_TO_FEATURE_FILE(S)>`
-  * PATH_TO_CONFIG - relative or full-qualified path to application.conf file (example [src/test/resources/application.conf](../src/test/resources/application.conf))
+* Download the jar from Maven https://mvnrepository.com/artifact/com.accenture.testing.bdd/bdd-for-all)
+* Execute `java -Dbddforall.config=<PATH_TO_CONFIG> -jar bdd-for-all-1.0-SNAPSHOT-jar-with-dependencies.jar <OPTIONS> <PATH_TO_FEATURE_FILE(S)>`
+  * PATH_TO_CONFIG - relative or full-qualified path to application.conf file (example [../src/test/resources/application.yml](../src/test/resources/application.yml))
   * OPTIONS - Pass the -h (or --help) switch here to see all available options
-  * PATH_TO_FEATURE_FILE(S) - relative or full-qualified path to a directory, a feature file
     * If specifying the name of a particular feature file you can also specify line numbers (e.g. My.feature:2:9) would load scenarios from lines 2 and 9
-  
-> Remember to pass the configuration file (e.g. *-Dconfig.file=<PATH_TO_CONFIG>*) BEFORE providing the -jar command, otherwise you will get an unknown option error
+
+> Remember to pass the configuration file (e.g. *-Dbddforall.config=<PATH_TO_CONFIG>*) BEFORE providing the -jar command, otherwise you will get an unknown option error

@@ -6,25 +6,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nullable;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+@ToString
+@Slf4j
+@Getter
+@Setter
+@AllArgsConstructor
 public class APIResponseState extends ResponseState {
 
-  private static final Logger LOG = LoggerFactory.getLogger(APIResponseState.class);
   private Response response;
   private APIResponseStateType responseStateType;
-
-  public APIResponseState(Response response, APIResponseStateType responseStateType) {
-    this.response = response;
-    this.responseStateType = responseStateType;
-  }
-
-  @Override
-  public Response getResponse() {
-    return response;
-  }
 
   @Override
   protected Object getValue(String path) {
@@ -50,15 +46,10 @@ public class APIResponseState extends ResponseState {
         }
 
       } catch (Exception e2) {
-        LOG.error("Trying to parse path {}", path, e);
+        log.error("Trying to parse path {}", path, e);
       }
     }
     return null;
-  }
-
-  @Override
-  public String toString() {
-    return ReflectionToStringBuilder.toString(this);
   }
 
 }

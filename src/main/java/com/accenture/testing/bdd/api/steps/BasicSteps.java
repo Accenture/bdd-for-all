@@ -1,28 +1,36 @@
 package com.accenture.testing.bdd.api.steps;
 
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.*;
 
 import com.accenture.testing.bdd.api.http.APIRequestState;
 import com.accenture.testing.bdd.api.http.APIResponseStateType;
+import com.accenture.testing.bdd.conversion.CustomTextToElementResolver;
+import com.accenture.testing.bdd.http.FileInfo;
 import com.accenture.testing.bdd.parameters.DefaultParamTransformer;
-import com.accenture.testing.bdd.util.BDDConfig;
-import com.typesafe.config.Config;
-import cucumber.api.Scenario;
-import cucumber.api.java8.En;
+import com.accenture.testing.bdd.config.BDDConfig;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java8.En;
+import io.cucumber.java8.Scenario;
 import io.restassured.http.ContentType;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.jalokim.propertiestojson.resolvers.primitives.string.TextToBooleanResolver;
+import pl.jalokim.propertiestojson.resolvers.primitives.string.TextToCharacterResolver;
+import pl.jalokim.propertiestojson.resolvers.primitives.string.TextToNumberResolver;
+import pl.jalokim.propertiestojson.resolvers.primitives.string.TextToObjectResolver;
 import pl.jalokim.propertiestojson.util.PropertiesToJsonConverter;
+import pl.jalokim.propertiestojson.util.PropertiesToJsonConverterBuilder;
 
 public class BasicSteps implements En {
 
-  private static Config config = BDDConfig.getConfig();
-  private static final Logger CURL_LOG = LoggerFactory.getLogger("curl");
+  private static final HierarchicalConfiguration<ImmutableNode> config = BDDConfig.getConfig();
+  private static final Logger curl_log = LoggerFactory.getLogger("curl");
 
   /**
    * container for cucumber lambda methods.
@@ -35,7 +43,7 @@ public class BasicSteps implements En {
     /** reset the request state */
     Before(
         (Scenario scenario) -> {
-          CURL_LOG.debug("## SCENARIO: {}", scenario.getName());
+          curl_log.debug("## SCENARIO: {}", scenario.getName());
         });
 
     /**
@@ -69,7 +77,7 @@ public class BasicSteps implements En {
         "I'm a {string}",
         (String consumer) -> {
           requestState.reset();
-          String type = config.getConfig("consumers").getString(consumer);
+          String type = config.configurationAt("consumers").getString(consumer);
           requestState.setResponseStateType(APIResponseStateType.valueOf(type));
         });
 
@@ -99,10 +107,9 @@ public class BasicSteps implements En {
         "I request a maximum response time of {long}",
         (Long timeout) -> {
           long actual = requestState.getResponseState().getResponse().getTime();
-          assertTrue(
-              String.format(
-                  "Request expected to return in %d or less, but returned in %d", timeout, actual),
-              timeout >= actual);
+          assertThat(actual)
+              .as("Request expected to return in %d or less", timeout)
+              .isLessThanOrEqualTo(timeout);
         });
 
     /**
@@ -116,7 +123,7 @@ public class BasicSteps implements En {
         (String method, String uri) -> {
           uri = paramTransformer.transform(uri);
           requestState.setHttpMethod(method);
-          requestState.setURI(uri);
+          requestState.setUri(uri);
         });
 
     /**
@@ -132,7 +139,7 @@ public class BasicSteps implements En {
           uri = paramTransformer.transform(uri);
           host = paramTransformer.transform(host);
           requestState.setHttpMethod(method);
-          requestState.setURI(uri);
+          requestState.setUri(uri);
           requestState.setHost(host);
         });
 
@@ -164,7 +171,21 @@ public class BasicSteps implements En {
                  e -> e.getKey(),
                  e -> paramTransformer.transform(e.getValue())
               ));
-          String body = new PropertiesToJsonConverter().convertToJson(transformed);
+          String body = getDTJsonConverter().convertToJson(transformed);
+          requestState.setHeader("Content-Type", ContentType.valueOf(type).withCharset("utf-8"));
+          requestState.setBody(paramTransformer.transform(body));
+        });
+
+    /**
+     * sets the body using a table
+     *
+     * @param type the type of content (JSON or XML)
+     * @param table the actual json or xml as dot notation
+     */
+    When(
+        "^I set the (JSON|XML) body from file \"([^\"]*)\"$",
+        (String type, String filePath) -> {
+          String body = FileInfo.newInstance(null, filePath).getFileBody();
           requestState.setHeader("Content-Type", ContentType.valueOf(type).withCharset("utf-8"));
           requestState.setBody(paramTransformer.transform(body));
         });
@@ -202,5 +223,21 @@ public class BasicSteps implements En {
         });
 
   }
+
+  /**
+   * custom converter for datatable to json conversion
+   * @return a custom configured converter (custom element separator ^;^)
+   */
+  PropertiesToJsonConverter getDTJsonConverter() {
+    return PropertiesToJsonConverterBuilder.builder()
+        .onlyCustomTextToObjectResolvers(
+      new CustomTextToElementResolver(),
+      new TextToObjectResolver(),
+      new TextToNumberResolver(),
+      new TextToCharacterResolver(),
+      new TextToBooleanResolver()
+    ).build();
+  }
+
 
 }

@@ -1,122 +1,66 @@
 # Configuration & Logging
 
-For application configuration we use typesafe config - https://github.com/lightbend/config - that has some features we particularly like.  Our logging is done with slf4j - https://www.slf4j.org/ - and backed by logback - https://logback.qos.ch/.
-
-# Basic Application Configuration
-
 Our default application configuration is fairly simple...
 
-```
-bddcore {
-
-  request {
-    server {
-      /** the default host to execute requests against */
-      host = "http://localhost:8080"
-    }
-    /** the user agent sent with each request */
-    userAgent = "ACN-BDD-CUCUMBER"
-    /** the MDC token sent with each request whose value is set from the step "I am executing test {string}" */
-    correlationIdName = "X-Correlation-ID"
-  }
-
-  http {
-    /** connection timeout settings */
-    connection {
-      managerTimeout = 10000
-      requestTimeout = 10000
-      socketTimeout = 10000
-    }
-  }
-  
-  consumers {
-
-    "Mobile device" = "JSON"
-
-  }
-
-}
+```yaml
+bdd-for-all:
+  request:
+    server:
+      host: "http://localhost:8181"
+    userAgent: "ACN-BDD-CUCUMBER"
+    correlationIdName: "X-Correlation-ID"
+   ## the cucumber properties
+  cucumber:
+     plugin: "pretty, json:target/cucumber/primary-cucumber.json"
+     glue: "com.accenture.testing.bdd.api.steps"
+     ### Could pass through JAVA file too
+     features: "src/test/resources/features"
+     ### keeps that annoying message off screen
+     ### around publisher
+     publish:
+        quiet: true
 ```
 
-If you want to override any of these, just add a application.conf file to your test/resources folder.
+> You'll notice the cucumber setting are stored here as well, instead of using the @CucumberOptions annotation.  
+> See [../src/main/resources/application.yml](../src/main/resources/application.yml) for the latest options.
 
-```
-bddcore {
+This is usually stored in application.yml file and for your convenience we use Spring's loading preferences.  That means...
 
-  request {
-
-    server {
-      host = "http://example.com"
-    }
-
-  }
-
-}
-```
-
-In the above example we override the default host, we can also do this using the step definition `I request (GET|POST) {string} on {string}`, but doing it here let's us easily change from environment to environment.
+1. You can run by creating your own application.yml (or if you like properties better application.properties)
+2. You can include the "bdd-for-all" section in your spring application configuration
+3. You can use [Spring conventions](https://docs.spring.io/spring-boot/docs/2.1.9.RELEASE/reference/html/boot-features-external-config.html#boot-features-external-config-application-property-files) like...
+    * spring.config.name to change the name of the config file
+    * spring.config.additional-location to add custom locations with overrides
+   
+> NOTE: At this time we don't support spring profiles, but this is a test harness not production app :)
 
 In addition to the default settings, you can also add default headers to each request sent.  This is good if you need to add things like Auth headers to each request sent...
 
-```
-bddcore {
-
-    defaults {
-
-      headers = [
-        {"Authorization": "Basic QWxhZGRpbjpPcGVuU2VzYW1l"},
-        {"From": "tester@test.com"}
-      ]
-
-    }
-
-  }
-
-}
+```yaml
+bdd-for-all:
+  defaults:
+    headers:
+       - "Authorization": "Basic QWxhZGRpbjpPcGVuU2VzYW1l"
+       - "From": "tester@test.com"
 ```
 
-The following line let's you create custom "initial contexts" for scenario's.  You'll use this to map your custom context (e.g. [Step 1a](GRAMMAR.md)) to one of the parsers.  If there's no mapping in the configuration file, will default to JSON parser.  You can see a working example in our test configuration - [/src/test/resources/application.conf](/src/test/resources/application.conf) - and test case - [/src/test/resources/features/BasicSteps.feature](/src/test/resources/features/BasicSteps.feature) in test BS4.
+And even change the "initial contexts" for scenario's.  You'll use this to map your custom context (e.g. [Step 1a](GRAMMAR.md)) to one of the parsers.  If there's no mapping in the configuration file, will default to JSON parser.  You can see a working example in our test configuration - [/src/test/resources/application.yml](/src/test/resources/application.yml) - and test case - [/src/test/resources/features/BasicSteps.feature](/src/test/resources/features/BasicSteps.feature) in test BS4.
 
+```yaml
+
+bdd-for-all:
+  consumers:
+    - "Mobile device" = "JSON"
 ```
 
-bddcore {
+For the latest configuration options, just check out our test config at [../src/test/resources/application.yml](../src/test/resources/application.yml)
 
-  consumers {
+> You can add your own custom vars and have them be available to your steps as well here.  See [Generating Data (and Variables)](DATAGEN.md)
 
-    "Mobile device" = "JSON"
-
-  }
-  
-}
-
-```
-
-As you can see, headers are an array, so you can add as many as you want.
 
 ## Basic Logging
 
-By default, all application logging is to stdout, including test information.  This can make things a little hard to read, but we assume most already have logging configurations set up for their tests.  If not, and you're using logback - [use ours](../src/test/resources/logback.xml)...
-
-```
-<?xml version="1.0" encoding="UTF-8"?>
-<configuration>
-
-  ...
-
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-    <layout class="ch.qos.logback.classic.PatternLayout">
-      ...
-    </layout>
-  </appender>
-
-  <root level="debug">
-    <appender-ref ref="STDOUT"/>
-  </root>
-  
-  ...
-
-</configuration>
-```
+By default, all application logging is to a logs directory, including test information.  We're using Sl4j which is likely to be compatible from a configuration standpoint with your Java app.  You can see our default configuration [here](../src/test/resources/logback-test.xml), it's pretty straight forward except for one thing...
 
 ### cURL logging
 

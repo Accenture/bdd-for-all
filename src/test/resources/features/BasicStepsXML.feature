@@ -1,5 +1,5 @@
 @Xml
-Feature: Testing out the basic step definitions for SOAP
+Feature: Testing out the basic step definitions for XML
 
   @Smoke @RemoteServer
   Scenario: Simple SOAP endpoint (BSS1)

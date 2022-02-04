@@ -1,0 +1,17 @@
+bdd-for-all:
+  request:
+    server:
+      host: "http://localhost:8080"
+    userAgent: "ACN-BDD-CUCUMBER2"
+    correlationIdName: "X-Correlation-ID"
+    defaults:
+      headers:
+  http:
+    connection:
+      managerTimeout: 10000
+      requestTimeout: 10000
+      socketTimeout: 10000
+  cucumber:
+    plugin: "pretty, html:target/cucumber"
+    glue: "com.accenture.testing.bdd.api.steps"
+    features: "src/test/resources/features"

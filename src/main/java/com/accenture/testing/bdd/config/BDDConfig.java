@@ -1,23 +1,26 @@
-package com.accenture.testing.bdd.util;
+package com.accenture.testing.bdd.config;
 
-import com.github.dzieciou.testing.curl.CurlLoggingRestAssuredConfigFactory;
+import com.github.dzieciou.testing.curl.CurlRestAssuredConfigFactory;
 import com.github.dzieciou.testing.curl.Options;
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
 import io.restassured.RestAssured;
 import io.restassured.config.HttpClientConfig;
 import io.restassured.config.RestAssuredConfig;
 import io.restassured.config.SSLConfig;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.configuration2.CombinedConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.tree.ImmutableNode;
 
+@Slf4j
 public class BDDConfig {
 
-  private static final Config config = ConfigFactory.load();
-  private static RestAssuredConfig restAssuredConfig =
+  static final CombinedConfiguration CONFIG = new ConfigLoader().loadConfiguration();
+
+  static final RestAssuredConfig restAssuredConfig =
       RestAssuredConfig.config().sslConfig(getSSLConfig()).httpClient(getHttpConfig());
 
   static {
-    RestAssured.config =
-        CurlLoggingRestAssuredConfigFactory.updateConfig(restAssuredConfig, getCurlOptions());
+    RestAssured.config = CurlRestAssuredConfigFactory.updateConfig(restAssuredConfig, getCurlOptions());
   }
 
   /**
@@ -25,8 +28,15 @@ public class BDDConfig {
    *
    * @return initialized config for project
    */
-  public static Config getConfig() {
-    return config.getConfig("bddcore");
+  public static HierarchicalConfiguration<ImmutableNode> getConfig() {
+    try {
+      return CONFIG.configurationAt("bdd-for-all");
+    }
+    catch (Exception e) {
+      log.info("Couldn't find a BDD configuration");
+      log.debug("NO BDD CONFIGURATION", e);
+    }
+    return CONFIG;
   }
 
   /**
@@ -67,10 +77,10 @@ public class BDDConfig {
    */
   public static HttpClientConfig getHttpConfig() {
     return HttpClientConfig.httpClientConfig()
-        .setParam("http.connection.timeout", getConfig().getInt("http.connection.requestTimeout"))
-        .setParam("http.socket.timeout", getConfig().getInt("http.connection.socketTimeout"))
+        .setParam("http.connection.timeout", getConfig().getInt("http.connection.requestTimeout", 10000))
+        .setParam("http.socket.timeout", getConfig().getInt("http.connection.socketTimeout", 10000))
         .setParam(
             "http.connection-manager.timeout",
-            getConfig().getInt("http.connection.managerTimeout"));
+            getConfig().getInt("http.connection.managerTimeout", 10000));
   }
 }

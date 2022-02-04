@@ -1,0 +1,61 @@
+######
+## unless noted otherwise, configuration elements
+## apply to ALL requests and as always RTFM
+## https://github.com/Accenture/bdd-for-all/blob/develop/docs/CONFIGURATION.md
+###
+bdd-for-all:
+  request:
+    server:
+      ## REALLY IMPORTANT!!!!!
+      ## the server to execute requests against
+      host: "http://localhost:8181"
+    ## the user agent sent over in the headers
+    ## good for debugging and tracing in your remote apps
+    userAgent: "ACN-BDD-CUCUMBER"
+    ## the name of the transaction id sent in the headers
+    correlationIdName: "X-Correlation-ID"
+    defaults:
+      ## array of custom headers
+      headers:
+        - "X-Made-Up-Header1": "Header Value 1"
+        - "From": "tester@example.com"
+  ## alternative contexts
+  ## so instead of saying - Given I am a JSON API consumer -
+  ## you can say things like - Given I'm a "Mobile device" -
+  ## and map it to a known consumer (e.g. JSON)
+  consumers:
+    - "Mobile device": JSON
+  ## custom variables that will be available to you in your
+  ## feature files
+  vars:
+    User:
+      Name:
+        First: Mike
+  ## The rest assured configuration
+  ## You don't need this, as these are the defaults
+  http:
+    connection:
+      managerTimeout: 10000
+      requestTimeout: 10000
+      socketTimeout: 10000
+  ## directly sets the cucumber properties, to see what else
+  ## you can set https://github.com/cucumber/cucumber-jvm/blob/main/junit-platform-engine/src/main/java/io/cucumber/junit/platform/engine/Constants.java
+  cucumber:
+    ## Could be anything you want, doesn't impact BDD For all processing
+    ## important for on screen messaging and reporting
+    ## see https://cucumber.io/docs/cucumber/reporting/ for more
+    plugin: "pretty, json:target/cucumber/primary-cucumber.json"
+    ## We leave this here, so you can add your own processors
+    ## at the very least you need the com.accenture.testing.bdd.api.steps
+    ## for this to work
+    glue: "com.accenture.testing.bdd.api.steps"
+    ## This is the path to the feature files to execute
+    ## Could pass in through code as well
+    features: "src/test/resources/features"
+    ## keeps that annoying message off screen
+    ## around publisher
+    publish:
+      quiet: true
+    ## fails on undefined steps
+    execution:
+      strict: true

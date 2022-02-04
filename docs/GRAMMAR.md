@@ -11,35 +11,38 @@ We wanted to create a simple lexicon with this library. Although there are many 
 
 <br />
 
-| Id  | Step                                                                                                                  | Applies To | Description                                                                                                                                   | Params  |
-|-----|-----------------------------------------------------------------------------------------------------------------------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------|---------|
-| 1   | I am a (JSON\|XML) API consumer                                                                                       | Request    | Initializes a new JSON or XML request                                                                                                         | [examples](#basics) |
-| 1a  | I'm a {string}                                                                                                        | Request    | Initializes a new JSON or XML request using a custom description (e.g. I'm a "Mobile device".  Useful when thinking more of consumers/devices.| [examples](#basics) |
-| 2   | I am executing test {string}                                                                                          | Request    | Set's the test id and adds it as the "X-Correlation-ID" header (name of the header configurable - see [configuration](docs/CONFIGURATION.md)) | [examples](#basics) |
-| 3   | I request (GET\|POST\|PUT\|PATCH\|DELETE) {string}                                                                                        | Request    | Set's the request type and path for the request.                                                                                              | [examples](#basics) |
-| 4   | I request (GET\|POST\|PUT\|PATCH\|DELETE) {string} on {string}                                                                            | Request    | Set's the request type and path for the request, while overriding the [default host](CONFIGURATION.md) for the request.                       | [examples](#basics) |
-| 5   | I set the (JSON\|XML) body to                                                                                         | Request    | Set's the body as well as the content type based on the content provided.                                                                     | [examples](#payloads) |
-| 5a  | I set the (JSON\|XML) body from values                                                                                | Request    | Set's the body as well as the content type based on the content provided using a datatable of name value pairs and dot notations (e.g. users[0].name) | [examples](#payloads) |
-| 6   | I set the SOAPAction to {string} and body as                                                                          | Request    | Shortcut to supply a SOAPAction in addition to the payload.  An alternative to calling the above step and adding a header step.               | [examples](#payloads) |
-| 7   | I provide the parameter {string} with a value of {string}                                                             | Request    | Allows you to set individual parameters - an alternative to setting them as part of the path (e.g. /path?param=param)                         | [examples](#params) |
-| 8   | I provide the parameters                                                                                              | Request    | Provide a list of parameters as a datatable - an alternative to setting them as part of the path (e.g. /path?param=param&param2=param2...)    | [examples](#params) |
-| 9   | I provide the header {string} with a value of {string}                                                                | Request    | Add a named header to the request in addition to the default headers you can add through [configuration](CONFIGURATION.md).                   | [examples](#headers) |
-| 10  | I provide the headers                                                                                                 | Request    | Add a set of headers using a datatable                                                                                                        | [examples](#headers) |
-| 11  | I should get a status code of {int}                                                                                   | Request    | Match the response code returned by the server                                                                                                | [examples](#basics) |
-| 12  | record the response as {string}                                                                                       | Request    | Save this request to the cache, so it's [headers and body](CHAINING.md) can be referenced later.                                              | [examples](#response) |
-| 13  | evaluating {string} should return (true\|false)                                                                        | Response   | Evaluate a [GPath](GPATH.md) expression against the response body (advanced use)                                                              | [examples](#response) |
-| 14  | the response value of {string} (should\|should not) equal {string}                                                     | Response   | Match a JSON/XML path value against a string or boolean value                                                                                 | [examples](#response) |
-| 15  | the response value of {string} (should\|should not) equal (integer\|float\|long) {string}                                | Response   | Match a JSON/XML path against a numeric value                                                                                                 | [examples](#response) |
-| 16  | path {string} must occur (only\|more than\|at least\|less than\|at most) {integer} times                                  | Response   | Match the number of occurances of a given path.                                                                                               | [examples](#response) |
-| 17  | the value {string} must occur (only\|more than\|at least\|less than\|at most) {integer} times for {string}                | Response   | Match the number of occurances of a path with a given string or boolean value.                                                                | [examples](#response) |
-| 18  | the (integer\|float\|long) {string} must occur (only\|more than\|at least\|less than\|at most) {integer} times for {string} | Response   | Match the number of occurances of a path with given numeric value.                                                                            | [examples](#response) |
-| 19  | path {string} (does\|does not) contain duplicates                                                                      | Response   | Check to see if a given path collection contains duplicates                                                                                   | [examples](#response) |
-| 20  | the response (should\|should not) contain the following elements                                                       | Response   | Check to see if the response has the elements list in the proceeding datable                                                                  | [examples](#response) |
-| 21  | path value {string} should (equal\|not equal) {string} value                                                           | Respsonse  | Compare two response paths                                                                                                                    | [examples](#response) |
-| 22  | the following path values should (equal\|not equal) each other                                                         | Response   | Compare the paths in the proceeding datatable                                                                                                 | [examples](#response) |
-| 23  | match header named {string} with a value of {string}                                                                  | Response   | Match a header value                                                                                                                          | [examples](#response) |
-| 24  | the following header name/value combinations are (equal\|not equal)                                                    | Response   | Match the proceeding header/value combinations                                                                                                | [examples](#response) |
-| 25  | I wait {long} (MILLISECONDS\|SECONDS\|MINUTES)                                                                        | Request   | Sleep for a timeframe before executing the next step, could actually be any JAVA TimeUnit                                                       | [examples](#basics) |
+| Id  | Step                                                                                                                  | Applies To                                 | Description                                                                                                                                   | Params  |
+|-----|-----------------------------------------------------------------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| 1   | I am a (JSON\| XML) API consumer                          | Request    | Initializes a new JSON or XML request                                                                                                         | [examples](#basics) |
+| 1a  | I'm a {string}                                                                                                        | Request                                    | Initializes a new JSON or XML request using a custom description (e.g. I'm a "Mobile device".  Useful when thinking more of consumers/devices.| [examples](#basics) |
+| 2   | I am executing test {string}                                                                                          | Request                                    | Set's the test id and adds it as the "X-Correlation-ID" header (name of the header configurable - see [configuration](docs/CONFIGURATION.md)) | [examples](#basics) |
+| 3   | I request (GET\| POST\                                      |PUT\|PATCH\|DELETE) {string}                                                                                        | Request    | Set's the request type and path for the request.                                                                                              | [examples](#basics) |
+| 4   | I request (GET\| POST\                                      |PUT\|PATCH\|DELETE) {string} on {string}                                                                            | Request    | Set's the request type and path for the request, while overriding the [default host](CONFIGURATION.md) for the request.                       | [examples](#basics) |
+| 5   | I set the (JSON\| XML) body to                               | Request    | Set's the body as well as the content type based on the content provided.                                                                     | [examples](#payloads) |
+| 5a  | I set the (JSON\| XML) body from values                      | Request    | Set's the body as well as the content type based on the content provided using a datatable of name value pairs and dot notations (e.g. users[0].name) | [examples](#payloads) |
+| 5a  | I set the (JSON\| XML) body from {file}                      | Request    | Set's the body as well as the content type based on the content provided using a file from disk                                               | [examples](#payloads) |
+| 6   | I set the SOAPAction to {string} and body as                                                                          | Request                                    | Shortcut to supply a SOAPAction in addition to the payload.  An alternative to calling the above step and adding a header step.               | [examples](#payloads) |
+| 7   | I am submitting a form                                                                                                | Request                                    | Ensures any params (or files) are packaged as form variables                                                                                  | [examples](#form) |
+| 8a  | I provide the parameter {string} with a value of {string}                                                             | Request                                    | Allows you to set individual parameters - an alternative to setting them as part of the path (e.g. /path?param=param)                         | [examples](#params) |
+| 8b  | I provide the parameters                                                                                              | Request                                    | Provide a list of parameters as a datatable - an alternative to setting them as part of the path (e.g. /path?param=param&param2=param2...)    | [examples](#params) |
+| 8c  | I provide the file {string} at {string} as {string  }                                                                 | Response                                   | Submit a file (multipart) - it's location is relative to where app is launched. (1) is param name, (2) is file location, & 3 is content type  | [examples](#form) |
+| 9   | I provide the header {string} with a value of {string}                                                                | Request                                    | Add a named header to the request in addition to the default headers you can add through [configuration](CONFIGURATION.md).                   | [examples](#headers) |
+| 10  | I provide the headers                                                                                                 | Request                                    | Add a set of headers using a datatable                                                                                                        | [examples](#headers) |
+| 11  | I should get a status code of {int}                                                                                   | Request                                    | Match the response code returned by the server                                                                                                | [examples](#basics) |
+| 12  | record the response as {string}                                                                                       | Request                                    | Save this request to the cache, so it's [headers and body](CHAINING.md) can be referenced later.                                              | [examples](#response) |
+| 13  | evaluating {string} should return (true\| false)                                     | Response   | Evaluate a [GPath](GPATH.md) expression against the response body (advanced use)                                                              | [examples](#response) |
+| 14  | the response value of {string} (should\| should not) equal {string}                 | Response   | Match a JSON/XML path value against a string or boolean value                                                                                 | [examples](#response) |
+| 15  | the response value of {string} (should\| should not) equal (integer\                |float\|long) {string}                                | Response   | Match a JSON/XML path against a numeric value                                                                                                 | [examples](#response) |
+| 16  | path {string} must occur (only\| more than\                                 |at least\|less than\|at most) {integer} times                                  | Response   | Match the number of occurances of a given path.                                                                                               | [examples](#response) |
+| 17  | the value {string} must occur (only\| more than\                                 |at least\|less than\|at most) {integer} times for {string}                | Response   | Match the number of occurances of a path with a given string or boolean value.                                                                | [examples](#response) |
+| 18  | the (integer\| float\                                     |long) {string} must occur (only\|more than\|at least\|less than\|at most) {integer} times for {string} | Response   | Match the number of occurances of a path with given numeric value.                                                                            | [examples](#response) |
+| 19  | path {string} (does\| does not) contain duplicates               | Response   | Check to see if a given path collection contains duplicates                                                                                   | [examples](#response) |
+| 20  | the response (should\| should not) contain the following elements | Response   | Check to see if the response has the elements list in the proceeding datable                                                                  | [examples](#response) |
+| 21  | path value {string} should (equal\| not equal) {string} value                  | Respsonse  | Compare two response paths                                                                                                                    | [examples](#response) |
+| 22  | the following path values should (equal\| not equal) each other                      | Response   | Compare the paths in the proceeding datatable                                                                                                 | [examples](#response) |
+| 23  | match header named {string} with a value of {string}                                                                  | Response                                   | Match a header value                                                                                                                          | [examples](#response) |
+| 24  | the following header name/value combinations are (equal\| not equal)                                 | Response   | Match the proceeding header/value combinations                                                                                                | [examples](#response) |
+| 25  | I wait {long} (MILLISECONDS\| SECONDS\                                   |MINUTES)                                                                        | Request   | Sleep for a timeframe before executing the next step, could actually be any JAVA TimeUnit                                                       | [examples](#basics) |
 
 Some things to remember...
 
@@ -136,6 +139,51 @@ As you can see, we're sending the same request three different ways.
 
 > Remember, it's all about readability!
 
+#### Setting up Form Parameters <a name="form">&nbsp;</a>[(back to top)](#top)
+
+To do a form submit, it's a simple as adding `I am submitting a form` to your scenario.  From there, you can use parameters, 
+but instead of querystring, they'll be moved to the body.
+
+```gherkin
+@Upload
+Feature: Testing out uploads
+
+  @Smoke
+  Scenario: Simple form parameter example
+    Given I am a JSON API consumer
+    And I am executing test "US01"
+    When I request POST "/formPost"
+    And I am submitting a form
+    And I provide the parameter "first" with a value of "mike"
+    And I provide the parameter "last" with a value of "something"
+    And I should get a status code of 200
+
+  @Smoke
+  Scenario: Simple upload example
+    Given I am a JSON API consumer
+    And I am executing test "US01"
+    When I request POST "/uploadFile"
+    And I am submitting a form
+    And I provide the file "file" at "src/test/resources/data/file.txt" as "text/plain"
+    And I should get a status code of 200
+
+  Scenario: Upload file with form parameters
+    Given I am a JSON API consumer
+    And I am executing test "US01"
+    When I request POST "/uploadFileX"
+    And I am submitting a form
+    And I provide the file "file" at "src/test/resources/data/file.txt" as "text/plain"
+    And I provide the parameter "first" with a value of "mike"
+    And I provide the parameter "last" with a value of "something"
+    And I should get a status code of 200
+```
+
+You can use the same syntax from the params section (Scenarios 2 & 3) as well, a couple of important notes on forms, though...
+
+1. For this to work, don't forget the `I am submitting a form`
+2. When submitting a file, the request will automatically switch to multipart
+3. File paths are relative.  This is important when running from the command line
+
 #### Request Payloads <a name="payloads">&nbsp;</a>[(back to top)](#top)
 
 There are times - a lot of them - when we need to send over a JSON or XML payload in the body of our request.  The following shows how we'd accomplish this.
@@ -156,6 +204,16 @@ There are times - a lot of them - when we need to send over a JSON or XML payloa
       }
       '''
      Then I should get a status code of 201
+
+  @Smoke @Json @ResponseMatch
+  Scenario: Test setting up JSON as file (BSJ2)
+    Given I am a JSON API consumer
+      And I am executing test "BSJ2"
+     When I request GET "/mirror"
+      And I set the JSON body from file "src/test/resources/data/payload.json"
+     Then I should get a status code of 200
+      And the response value of "firstName" should equal "mike"
+      And the response value of "nested.lastName" should equal "parcewski"  
      
   Scenario: Testing with SOAPAction
     Given I am a XML API consumer
@@ -167,22 +225,21 @@ There are times - a lot of them - when we need to send over a JSON or XML payloa
         <item>Hello!</item>
       </element>
       '''
-     Then I should get a status code of 201
-     
+     Then I should get a status code of 201   
      
   Scenario: Test setting up JSON as table (BSJ2)
     Given I am a JSON API consumer
       And I am executing test "BSJ2"
      When I request GET "/mirror"
       And I set the JSON body from values
-      | users[0].id        | 1      |
-      | users[0].name      | Mike   |
-      | users[0].favorites | 1,2,3  |
-      | users[0].active    | true   |
-      | users[1].id        | 2      |
-      | users[1].name      | Bob    |
-      | users[1].favorites | 4,7,9  |
-      | users[1].active    | false  |
+      | users[0].id        | 1        |
+      | users[0].name      | Mike     |
+      | users[0].favorites | [1,2,3]  |
+      | users[0].active    | true     |
+      | users[1].id        | 2        |
+      | users[1].name      | Bob      |
+      | users[1].favorites | [4,7,9]  |
+      | users[1].active    | false    |
      Then I should get a status code of 200
       And evaluating "users.count{ it.id == 1 } == 1" should return true
       And evaluating "users[0].id == 4" should return false
@@ -224,6 +281,8 @@ For the third scenario, we're using data tables.  Using a simple "dot notation",
 ```
 
 As you can see, we can have simple and complex objects, numbers and booleans all with this simple syntax.  Some teams find this easier to use when working with the business.
+
+Since we're calling out features, you'll notice that *favorites* which is surrounded in brackets (e.g. []).  If you use brackets, any contents will be converted to an array with comma as a separator.
 
 Another important note, this will add one of the following headers based on the type of payload...
 

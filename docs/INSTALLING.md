@@ -6,7 +6,7 @@ Maven
 <dependency>
   <groupId>com.accenture.testing.bdd</groupId>
   <artifactId>bdd-for-all</artifactId>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
@@ -19,7 +19,7 @@ Buildr
 Ivy
 
 ```xml
-<dependency org="com.accenture.testing.bdd" name="bdd-for-all" rev="1.0.0">
+<dependency org="com.accenture.testing.bdd" name="bdd-for-all" rev="2.0.0">
   <artifact name="bdd-for-all" type="jar" />
 </dependency>
 ```
@@ -28,25 +28,25 @@ Groovy Grape
 
 ```scala
 @Grapes(
-@Grab(group='com.accenture.testing.bdd', module='bdd-for-all', version='1.0.0')
+@Grab(group='com.accenture.testing.bdd', module='bdd-for-all', version='2.0.0')
 )
 ```
 
 Gradle/Grails
 
 ```sbtshell
-compile 'com.accenture.testing.bdd:bdd-for-all:1.0.0'
+compile 'com.accenture.testing.bdd:bdd-for-all:2.0.0'
 ```
 
 SBT
 
 ```sbtshell
-libraryDependencies += "com.accenture.testing.bdd" % "bdd-for-all" % "1.0.0"
+libraryDependencies += "com.accenture.testing.bdd" % "bdd-for-all" % "2.0.0"
 ```
 
 Leiningen
 
 ```java
-[com.accenture.testing.bdd/bdd-for-all "1.0.0"]
+[com.accenture.testing.bdd/bdd-for-all "2.0.0"]
 ```
 

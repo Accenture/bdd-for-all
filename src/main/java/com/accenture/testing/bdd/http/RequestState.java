@@ -1,30 +1,33 @@
 package com.accenture.testing.bdd.http;
 
-import com.accenture.testing.bdd.util.BDDConfig;
-import com.typesafe.config.Config;
+import com.accenture.testing.bdd.config.BDDConfig;
 import io.restassured.http.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 
+@Slf4j
 public abstract class RequestState {
 
-  private static final Logger LOG = LoggerFactory.getLogger(RequestState.class);
-  private static Config config = BDDConfig.getConfig();
+  private static HierarchicalConfiguration config = BDDConfig.getConfig();
   private static Pattern QS_PATTERN = Pattern.compile("(\\w+)=?([^&]+)?");
-  private Map<String, List<String>> params = new HashMap<>();
-  private Map<String, String> headers = new HashMap<>();
-  private String body;
-  private Method httpMethod;
-  private String uri;
-  private String host;
+  @Getter Map<String, List<String>> parameters = new HashMap<>();
+  @Getter Map<String, String> headers = new HashMap<>();
+  @Getter Map<String, FileInfo> files = new HashMap<>();
+  @Getter @Setter String body;
+  @Getter String uri;
+  @Getter Method httpMethod;
+  @Getter @Setter String host;
+  @Getter @Setter Boolean isForm = Boolean.FALSE;
 
   /**
    * get response object; will execute request. if it hasn't already been executed or it's been
@@ -36,12 +39,14 @@ public abstract class RequestState {
 
   /** resets the state of this object. */
   public void reset() {
-    params.clear();
+    parameters.clear();
+    files.clear();
     resetHeaders();
     body = null;
     httpMethod = null;
     uri = null;
     setHost(config.getString("request.server.host"));
+    setIsForm(Boolean.FALSE);
   }
 
   /**
@@ -50,22 +55,13 @@ public abstract class RequestState {
    */
   public void resetHeaders() {
     headers.clear();
-    config
-        .getObjectList("request.defaults.headers")
-        .forEach(
-            obj -> {
-              Map<String, Object> header = obj.unwrapped();
-              header.forEach((k, v) -> setHeader(k, v.toString()));
-            });
-  }
-
-  /**
-   * get the HTTP method for this request.
-   *
-   * @return the http method.
-   */
-  public Method getHttpMethod() {
-    return httpMethod;
+    Properties props = config.getProperties("request.defaults.headers");
+    props.keySet().stream()
+        .forEach(item -> {
+          String key = item.toString();
+          log.info("HEADER: {} with {}", key, props.getProperty(key));
+          setHeader(key, props.getProperty(key));
+        });
   }
 
   /**
@@ -77,19 +73,10 @@ public abstract class RequestState {
     try {
       httpMethod = Method.valueOf(method);
     } catch (IllegalArgumentException iae) {
-      LOG.error("Not a valid httpmethod {}", method);
+      log.error("Not a valid httpmethod {}", method);
     } catch (NullPointerException npe) {
-      LOG.error("method was null");
+      log.error("method was null");
     }
-  }
-
-  /**
-   * get the URI for the request.
-   *
-   * @return the URI for the request
-   */
-  public String getURI() {
-    return uri;
   }
 
   /**
@@ -97,39 +84,12 @@ public abstract class RequestState {
    *
    * @param uri the uri for the request.
    */
-  public void setURI(String uri) {
+  public void setUri(String uri) {
     setParamsFromURI(uri);
     if (Objects.nonNull(uri) && uri.contains("?")) {
       uri = uri.substring(0, uri.indexOf('?'));
     }
     this.uri = uri;
-  }
-
-  /**
-   * get the URI for the request.
-   *
-   * @return the URI for the request
-   */
-  public String getHost() {
-    return host;
-  }
-
-  /**
-   * set the URI for the request.
-   *
-   * @param host the uri for the request.
-   */
-  public void setHost(String host) {
-    this.host = host;
-  }
-
-  /**
-   * get the request headers.
-   *
-   * @return the request headers
-   */
-  public Map<String, String> getHeaders() {
-    return headers;
   }
 
   /**
@@ -152,22 +112,13 @@ public abstract class RequestState {
   }
 
   /**
-   * Get request paramters.
-   *
-   * @return the request parameters
-   */
-  public Map<String, List<String>> getParameters() {
-    return params;
-  }
-
-  /**
    * get named parameter value.
    *
    * @param name the name of the parameter
    * @return the parameter value
    */
   public List<String> getParameter(String name) {
-    return params.get(name);
+    return parameters.get(name);
   }
 
   /**
@@ -194,27 +145,21 @@ public abstract class RequestState {
    * @param val the parameter value
    */
   public void setParameter(String name, String val) {
-    if (StringUtils.isBlank(name)) {
+    if (name == null || name.chars().allMatch(Character::isWhitespace)) {
       return;
     }
-    params.computeIfAbsent(name, list -> new ArrayList<>()).add(val);
+    parameters.computeIfAbsent(name, list -> new ArrayList<>()).add(val);
   }
 
   /**
-   * get the request body.
+   * add header name/value to the request.
    *
-   * @return the request body
+   * @param name the header name
+   * @param file the file location
+   * @param type the media type
    */
-  public String getBody() {
-    return body;
+  public void addFile(String name, String file, String type) {
+    files.put(name, FileInfo.newInstance(type, file));
   }
 
-  /**
-   * set the request body.
-   *
-   * @param body the body as text
-   */
-  public void setBody(String body) {
-    this.body = body;
-  }
 }

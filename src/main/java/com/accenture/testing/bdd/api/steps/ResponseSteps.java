@@ -1,12 +1,12 @@
 package com.accenture.testing.bdd.api.steps;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.*;
 
 import com.accenture.testing.bdd.api.http.APIRequestState;
 import com.accenture.testing.bdd.comparison.Operator;
 import com.accenture.testing.bdd.parameters.DefaultParamTransformer;
-import cucumber.api.java8.En;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java8.En;
 import java.util.Map;
 import java.util.Objects;
 
@@ -40,12 +40,9 @@ public class ResponseSteps implements En {
         "I should get a status code of {int}",
         (Integer statusCode) -> {
           Integer status = requestState.getResponseState().getResponse().getStatusCode();
-          assertEquals(
-              String.format(
-                  "Expected status code of %d, but got %d from %s",
-                  statusCode, status, requestState.getURI()),
-              statusCode,
-              status);
+          assertThat(statusCode)
+              .as("Expected status code of %d, but got %d from %s", statusCode, status, requestState.getUri())
+              .isEqualTo(status);
         });
 
     /**

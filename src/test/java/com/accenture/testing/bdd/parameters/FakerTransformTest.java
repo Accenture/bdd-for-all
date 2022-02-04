@@ -18,7 +18,7 @@ public class FakerTransformTest extends TestCase {
   /** test valid call to method */
   public void test_generate_valid() {
     FakerTransform ft = new FakerTransform();
-    String formatOption = "address.city,en-US";
+    String formatOption = "address.cityName,en-US";
     String ret = ft.transform(formatOption, null);
     Assert.assertFalse(
         String.format("Valid method call %s, fails and returns %s", formatOption, ret),
@@ -55,14 +55,14 @@ public class FakerTransformTest extends TestCase {
       // build up some text so detector can guess well
       String ret =
           IntStream.rangeClosed(1, 10)
-              .mapToObj(i -> ft.transform(String.format("address.streetAddress,%s", locale), null))
+              .mapToObj(i -> ft.transform(String.format("address.streetName,%s", locale), null))
               .collect(Collectors.joining(" "));
       Detector detector = DetectorFactory.create();
       detector.append(ret);
       String detected = detector.detect();
 
       Assert.assertEquals(
-          String.format("%s locale does not match detected locale %s", locale, detected),
+          String.format("%s locale does not match detected locale %s for %s", locale, detected, ret),
           locale,
           detected);
     }

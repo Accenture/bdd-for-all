@@ -14,10 +14,10 @@ Feature: Testing out faker transformers
           "first_name": "{{faker::name.firstName,en-US}}",
           "last_name": "{{faker::name.lastName,en-US}}",
           "suffix": "{{faker::name.suffix,en-US}}",
-          "phone": "{{faker::name.phone,en-US}}",
+          "phone": "{{faker::phoneNumber.cellPhone,en-US}}",
           "address": {
             "line1": "{{faker::address.streetAddress,en-US}}",
-            "city": "{{faker::address.city,en-US::city}}",
+            "city": "{{faker::address.cityName,en-US::city}}",
             "state": "{{faker::address.stateAbbr,en-US}}"
           }
         }
@@ -28,9 +28,9 @@ Feature: Testing out faker transformers
       And the response value of "lead.address.city" should equal "{{cache::city}}"
 
   @Smoke @Json @Cache @ResponseMatch @Lang
-  Scenario Outline: Testing generating a few types of props and validation from cache (FT2)
+  Scenario Outline: Testing generating a few types of props and validation from cache (FT3)
     Given I am a JSON API consumer
-      And I am executing test "FT2"
+      And I am executing test "FT3"
      When I request GET "/mirror"
       And I set the JSON body to
       """
@@ -40,10 +40,10 @@ Feature: Testing out faker transformers
           "first_name": "{{faker::name.firstName,<LANG>}}",
           "last_name": "{{faker::name.lastName,<LANG>}}",
           "suffix": "{{faker::name.suffix,<LANG>}}",
-          "phone": "{{faker::name.phone,<LANG>}}",
+          "phone": "{{faker::phoneNumber.cellPhone,<LANG>}}",
           "address": {
             "line1": "{{faker::address.streetAddress,<LANG>}}",
-            "city": "{{faker::address.city,<LANG>::city}}",
+            "city": "{{faker::address.cityName,<LANG>::city}}",
             "state": "{{faker::address.stateAbbr,<LANG>}}"
           }
         }
@@ -61,9 +61,9 @@ Feature: Testing out faker transformers
     | fr      |
 
   @Smoke @Json @GPath @ResponseMatch
-  Scenario: Test setting up JSON as table with generation (FT3)
+  Scenario: Test setting up JSON as table with generation (FT4)
     Given I am a JSON API consumer
-      And I am executing test "BSJ2"
+      And I am executing test "FT4"
      When I request GET "/mirror"
       And I set the JSON body from values
       | users[0].id        | 1                                    |
