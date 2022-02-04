@@ -1,8 +1,8 @@
 **Quick Links:** [User Guide](docs/USERGUIDE.md) | [Running](docs/RUNNING.md) | [Grammar](docs/GRAMMAR.md)
 
-[![Snapshot Build](https://github.com/Accenture/bdd-for-all/actions/workflows/maven.yml/badge.svg)](https://github.com/Accenture/bdd-for-all/actions/workflows/maven.yml) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.accenture.testing.bdd/bdd-for-all/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.accenture.testing.bdd/bdd-for-all)
+[![Builds](https://github.com/Accenture/bdd-for-all/actions/workflows/maven.yml/badge.svg)](https://github.com/Accenture/bdd-for-all/actions/workflows/maven.yml) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.accenture.testing.bdd/bdd-for-all/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.accenture.testing.bdd/bdd-for-all)
 
-**Latest snapshots can be found on [Sonatype](https://oss.sonatype.org/#nexus-search;quick~bdd-for-all)**
+**Latest builds can be found on [Sonatype](https://oss.sonatype.org/#nexus-search;quick~bdd-for-all)**
 
 ![Logo](docs/samples/bdd-white-logo.png)
 
