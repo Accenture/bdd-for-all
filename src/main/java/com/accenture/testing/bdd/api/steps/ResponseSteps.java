@@ -124,6 +124,27 @@ public class ResponseSteps implements En {
         });
 
     /**
+     * element should/not equal value.
+     *
+     * @param path the query path (json, xml, etc...)
+     * @param val the value to match against the path val
+     */
+    Then(
+        "^the response value of \"([^\"]*)\" (should|should not) contain \"([^\"]*)\"$",
+        (String path, String operation, String val) -> {
+          Object in = paramTransformer.transform(val);
+
+          switch (operation) {
+            case "should not":
+              requestState.getResponseState().notContains(paramTransformer.transform(path), in);
+              break;
+            default:
+              requestState.getResponseState().contains(paramTransformer.transform(path), in);
+              break;
+          }
+        });
+
+    /**
      * check path for number of occurances
      *
      * @param path the query path

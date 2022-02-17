@@ -60,6 +60,24 @@ Feature: Testing out the request step definitions for JSON
   @Regression
   Scenario: Test long matching (RSJ6)
 
+  @Regression @Json
+  Scenario: Test contains matching (RSJC1)
+    Given I am a JSON API consumer
+    And I am executing test "RSJC1"
+    When I request GET "/json/todos"
+    Then I should get a status code of 200
+    And the response value of "todos[0].title" should contain "delect"
+    And the response value of "todos[0].title" should not contain "mike"
+
+  @Regression @Json
+  Scenario: Test contains matching (RSJC2)
+    Given I am a JSON API consumer
+    And I am executing test "RSJC2"
+    When I request GET "/simplepayload"
+    Then I should get a status code of 200
+    And the response value of "documentId" should contain "mydocument_id__"
+    And the response value of "documentId" should not contain "mike"
+
   @Smoke @Json @Elements
   Scenario: Path occurs X number of times (RSJ7)
     Given I am a JSON API consumer

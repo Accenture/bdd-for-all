@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/simplepayload"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "message": "Success",
+      "documentId": "mydocument_id__c22baab1-a06d-464b-91a9-a31c90822470"
+    }
+  }
+}

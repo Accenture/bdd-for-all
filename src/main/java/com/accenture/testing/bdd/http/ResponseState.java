@@ -73,6 +73,38 @@ public abstract class ResponseState {
   }
 
   /**
+   * asserts provided path value contains expected object value.
+   *
+   * @param path the path to extract the value from
+   * @param obj the value it is expected to contain
+   */
+  public void contains(String path, Object obj) {
+    Object val = getValue(path);
+    assertThat(obj)
+        .as("Expected %s value to contain %s was %s", path, obj, val)
+        .matches(s -> {
+          String txt = Objects.toString(s, null);
+          return txt != null && txt.contains(Objects.toString(obj));
+        });
+  }
+
+  /**
+   * asserts provided path value does not contain expected object value.
+   *
+   * @param path the path to extract the value from
+   * @param obj the value it is expected to not contain
+   */
+  public void notContains(String path, Object obj) {
+    Object val = getValue(path);
+    assertThat(obj)
+        .as("Expected %s value to not contain %s was %s", path, obj, val)
+        .matches(s -> {
+          String txt = Objects.toString(s, null);
+          return txt != null && txt.contains(Objects.toString(obj));
+        });
+  }
+
+  /**
    * the provided path returns x elements.
    *
    * @param path the path to pull matching elements from
