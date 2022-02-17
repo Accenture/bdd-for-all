@@ -79,12 +79,12 @@ public abstract class ResponseState {
    * @param obj the value it is expected to contain
    */
   public void contains(String path, Object obj) {
-    Object val = getValue(path);
+    String val = Objects.toString(getValue(path));
     assertThat(obj)
         .as("Expected %s value to contain %s was %s", path, obj, val)
         .matches(s -> {
           String txt = Objects.toString(s, null);
-          return txt != null && txt.contains(Objects.toString(obj));
+          return txt != null && val.contains(Objects.toString(obj));
         });
   }
 
@@ -95,12 +95,12 @@ public abstract class ResponseState {
    * @param obj the value it is expected to not contain
    */
   public void notContains(String path, Object obj) {
-    Object val = getValue(path);
+    String val = Objects.toString(getValue(path));
     assertThat(obj)
-        .as("Expected %s value to not contain %s was %s", path, obj, val)
+        .as("Expected %s value to contain %s was %s", path, obj, val)
         .matches(s -> {
           String txt = Objects.toString(s, null);
-          return txt != null && txt.contains(Objects.toString(obj));
+          return txt != null && !val.contains(Objects.toString(obj));
         });
   }
 
