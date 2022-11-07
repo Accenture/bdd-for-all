@@ -46,7 +46,7 @@ public class ConfigLoader {
   static final String[] DEF_FILE_PATHS = {
       "config",
       "",
-      CLASSPATH_START + "config/",
+      CLASSPATH_START + "config" + File.separator,
       CLASSPATH_START
   };
 
@@ -130,7 +130,7 @@ public class ConfigLoader {
 
     return Arrays.stream(DEF_EXTENSIONS)
         .flatMap(ext -> {
-          String fPath = f.getAbsolutePath().concat("/").concat(getConfigName()).concat(".").concat(ext);
+          String fPath = f.getAbsolutePath().concat(File.separator).concat(getConfigName()).concat(".").concat(ext);
           log.debug("Attempting to discover {}", fPath);
           return getPaths(fPath).stream();
         })
